@@ -1,0 +1,31 @@
+.id-container {
+    display: block;;
+    justify-content: center;
+    align-items: center;
+    margin: auto auto;
+}
+    
+.info-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+
+.join-container {
+    display: flex;
+    border-radius: 1rem 1rem;
+}
+
+.header-id {
+    display: block;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border-radius: 0.5rem 0.5rem;
+    background: #db4d4b;
+}
+
+
+
+
