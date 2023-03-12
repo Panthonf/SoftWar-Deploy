@@ -112,10 +112,7 @@ export default class CreateActivity extends Component {
                 title:"Connot use date.",
                 showConfirmButton:true
             })            
-            {this.setState({
-                startTime:"",
-                endTime:"",
-            })}
+            
         }else{
         const activity = {
             actName: this.state.actName,

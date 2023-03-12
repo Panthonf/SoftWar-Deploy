@@ -1,38 +1,35 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import './navbar.component.css';
-import './Styles.css';
+import "./navbar.component.css";
+import "./Styles.css";
 
 export default class navbar extends Component {
+  render() {
+    return (
+      <header>
+        <div className="grid grid-cols-2 navbar my-8 items-center">
+          <Link to="/" className="">
+            <p className="text-16px bold text-navy">GARLICWAK</p>
+          </Link>
 
-    constructor(props) {
-        super(props)
-    }
+          <div className="container justify-end">
+            <p className="text-16px bold text-red-it">{this.props.name}</p>
+          </div>
 
-    render() {
-        return (
-            <header>
-                <div className="grid grid-cols-2 navbar my-8 items-center">
-                    <Link to="/" className="">
-                        <p className="text-16px bold text-navy">GARLICWAK</p>
-                    </Link>
+          <div className="text-14px text-navy">
+            <button
+              onClick={(e) => {
+                localStorage.clear();
+                window.history.back();
+              }}
+            >
+              Log out
+            </button>
+          </div>
+        </div>
 
-                    <div className="container justify-end">
-                        <p className="text-16px bold text-red-it">
-                            {this.props.name}
-                            </p>
-                    </div>
-
-                    <div className="text-14px text-navy">
-                        <button onClick={(e) => {
-                            localStorage.clear()
-                            window.history.back()
-                        }}>Log out</button>
-                    </div>
-                </div>
-
-                <div className="line-horizon px-12 mx-12"></div>
-            </header>
-        );
-    }
+        <div className="line-horizon px-12 mx-12"></div>
+      </header>
+    );
+  }
 }

@@ -1,6 +1,6 @@
 import React, {  useRef } from "react";
 import Chart from "chart.js/auto";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 
 
