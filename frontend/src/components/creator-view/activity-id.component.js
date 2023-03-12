@@ -1,6 +1,6 @@
 import { Buffer } from "buffer";
 import axios from "axios";
-import GenerateQR from "./qr-activity";
+// import GenerateQR from "./qr-activity";
 import CreatorProjectLists from "./project-list.component";
 import { Link } from "react-router-dom";
 import "../id.component.css";
@@ -69,7 +69,7 @@ const ActivityInfo = (props) => {
 
                         <div className="items-center my-auto mx-8">
                             {/* qrcode */}
-                            <GenerateQR urls={props.urls} actName={props.actName} />
+                            {/* <GenerateQR urls={props.urls} actName={props.actName} /> */}
                         </div>
                     </div>
                 </div>
