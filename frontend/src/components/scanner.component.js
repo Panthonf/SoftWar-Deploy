@@ -28,10 +28,10 @@ export default class scannerCode extends Component {
   }
 
   render() {
-    const preview = {
-      height: 300,
-      width: 300,
-    };
+    // const preview = {
+    //   height: 300,
+    //   width: 300,
+    // };
 
     return (
       <div className="flex justify-center m-4">
