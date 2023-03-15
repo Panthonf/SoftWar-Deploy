@@ -25,7 +25,7 @@ export default class projectID extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("http://localhost:5000/project/" + arr[arr.length - 1])
+            .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
             .then((res) => {
                 this.setState({
                     projectName: res.data.projectName,
@@ -51,7 +51,7 @@ export default class projectID extends Component {
         return (<div>
             <button onClick={(e) => {
                 const arr = window.location.href.split("/")
-                axios.delete("http://localhost:5000/project/delete/" + arr[arr.length - 1])
+                axios.delete("https://garlicwak.onrender.com/project/delete/" + arr[arr.length - 1])
                 window.history.back()
             }}>Delete</button>
         </div>)
@@ -198,7 +198,7 @@ class Feedback extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("http://localhost:5000/feedback/project/" + arr[arr.length - 1])
+            .get("https://garlicwak.onrender.com/feedback/project/" + arr[arr.length - 1])
             .then((resp) => {
                 this.setState({ feedBacks: resp.data });
                 console.log(resp.data);

@@ -148,7 +148,7 @@ export default class creatorActivityId extends Component {
         window.localStorage.setItem("idAct", access);
         console.log("hh", window.localStorage.getItem("idAct"));
         axios
-            .get("http://localhost:5000/activity/" + access)
+            .get("https://garlicwak.onrender.com/activity/" + access)
             .then((response) => {
                 this.setState({
                     actName: response.data.actName,

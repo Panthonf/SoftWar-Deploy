@@ -31,7 +31,7 @@ export default class EditProject extends Component {
 
     componentDidMount() {
         const arr = window.location.href.split("/")
-        axios.get("http://localhost:5000/project/" + arr[arr.length - 1]).then((res) => {
+        axios.get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1]).then((res) => {
             this.setState({
                 idProj: arr[arr.length - 1],
                 projectName: res.data.projectName,
@@ -135,7 +135,7 @@ export default class EditProject extends Component {
                 showConfirmButton: true
             })
         } else {
-            axios.post("http://localhost:5000/project/update/" + this.state.idProj, dataReq).then((res) => {
+            axios.post("https://garlicwak.onrender.com/project/update/" + this.state.idProj, dataReq).then((res) => {
                 if (res.status === 200) {
                     Swal.fire({
                         title: "Update Project Successfully",

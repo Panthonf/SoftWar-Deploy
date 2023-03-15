@@ -146,7 +146,7 @@ export default class createProject extends Component {
                 members: this.state.members,
             };
 
-            axios.post("http://localhost:5000/project/add", reqData).then((res) => {
+            axios.post("https://garlicwak.onrender.com/project/add", reqData).then((res) => {
                 if (res.status === 200) {
                     Swal.fire({
                         title: "Created Project Successfully",

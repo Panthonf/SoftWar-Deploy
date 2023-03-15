@@ -28,7 +28,7 @@ export default class result extends Component {
   componentDidMount() {
     axios
       .get(
-        "http://localhost:5000/project/activity/" +
+        "https://garlicwak.onrender.com/project/activity/" +
           window.localStorage.getItem("idAct")
       )
       .then((response) => {

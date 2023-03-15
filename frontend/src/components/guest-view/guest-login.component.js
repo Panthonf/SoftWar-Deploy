@@ -15,7 +15,7 @@ export default class guestLogin extends Component {
   }
 
   componentDidMount() {
-    axios.get("http://localhost:5000/activity/").then((res) => {
+    axios.get("https://garlicwak.onrender.com/activity/").then((res) => {
       console.log(res.data[0].code);
     });
 
@@ -46,7 +46,7 @@ export default class guestLogin extends Component {
     window.localStorage.removeItem("guestVirtualMoney");
 
     axios
-      .post("http://localhost:5000/guest/add", guestInfo)
+      .post("https://garlicwak.onrender.com/guest/add", guestInfo)
       .then((res) => {
         if (res.status === 200) {
           Swal.fire({
@@ -57,7 +57,7 @@ export default class guestLogin extends Component {
             timer: 3000,
           });
 
-          axios.get("http://localhost:5000/activity/").then((res) => {
+          axios.get("https://garlicwak.onrender.com/activity/").then((res) => {
             let i;
             for (i = 0; i < res.data.length; i++) {
               if (index === res.data[i].code) {

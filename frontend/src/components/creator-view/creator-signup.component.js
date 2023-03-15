@@ -20,7 +20,7 @@ export default class creatorSignup extends Component {
     const { fname, lname, email, password } = this.state;
 
     console.log(fname, lname, email, password);
-    fetch("http://localhost:5000/creatorUsers/creatorReg", {
+    fetch("https://garlicwak.onrender.com/creatorUsers/creatorReg", {
       method: "POST",
       crossDomain: true,
       headers: {

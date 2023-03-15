@@ -81,7 +81,7 @@ export default class homepage extends Component {
 		}
 
 		axios
-			.get("http://localhost:5000/activity/name/" + code.code)
+			.get("https://garlicwak.onrender.com/activity/name/" + code.code)
 			.then((res) =>{
 				// console.log(res.data.length)
 				if(res.status === 200 && res.data.length){

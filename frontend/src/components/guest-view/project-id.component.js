@@ -35,7 +35,7 @@ export default class projectID extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("http://localhost:5000/project/" + arr[arr.length - 1])
+            .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
             .then((res) => {
                 this.setState({
                     projectName: res.data.projectName,
@@ -102,7 +102,7 @@ export default class projectID extends Component {
                     // .then(() => console.log("Success"))
                     // .catch((err) => console.log("Error: " + err));
                     axios
-                        .post("http://localhost:5000/feedback/add", data)
+                        .post("https://garlicwak.onrender.com/feedback/add", data)
                         .then(() => console.log("Success."))
                         .catch((err) => console.log("Error: " + err));
                     window.localStorage.guestVirtualMoney =
@@ -443,7 +443,7 @@ class Feedback extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("http://localhost:5000/feedback/project/" + arr[arr.length - 1])
+            .get("https://garlicwak.onrender.com/feedback/project/" + arr[arr.length - 1])
             .then((resp) => {
                 this.setState({ feedBacks: resp.data });
             })
@@ -463,7 +463,7 @@ class Feedback extends Component {
         const arr = window.location.href.split("/");
         axios
             .post(
-                "http://localhost:5000/project/updateTotalVirtualMoney/" +
+                "https://garlicwak.onrender.com/project/updateTotalVirtualMoney/" +
                 arr[arr.length - 1],
                 { totalVirtualMoney: this.showCalculateVirtual() }
             )
