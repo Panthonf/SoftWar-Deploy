@@ -1,10 +1,12 @@
 {
   "files": {
-    "main.css": "/static/css/main.31f15b23.css",
-    "main.js": "/static/js/main.8eac8a8a.js",
+    "main.css": "/static/css/main.e8a5659b.css",
+    "main.js": "/static/js/main.b8305c04.js",
     "static/js/496.1ef02482.chunk.js": "/static/js/496.1ef02482.chunk.js",
+    "static/media/welcom-png.png": "/static/media/welcom-png.e6672c7fb0ab01f65712.png",
     "static/media/christmas-star.png": "/static/media/christmas-star.25aa782664b1478ac84b.png",
-    "static/media/qr-code - 1.png": "/static/media/qr-code - 1.68e8cea5195209e9c9c2.png",
+    "static/media/bin.png": "/static/media/bin.52f68b584e1c60d7c506.png",
+    "static/media/qr-code-pink.png": "/static/media/qr-code-pink.694ae5f95686d6de55a8.png",
     "static/media/cross.png": "/static/media/cross.12de289a8c6ee53b64fb.png",
     "static/media/idea.png": "/static/media/idea.c24cfc84478d431ce1a5.png",
     "static/media/question-mark.png": "/static/media/question-mark.84f1878d45e0a36d73cd.png",
@@ -12,17 +14,19 @@
     "static/media/Metropolis-Bold.otf": "/static/media/Metropolis-Bold.c5e04fafcff6fc79cd76.otf",
     "static/media/Metropolis-Medium.otf": "/static/media/Metropolis-Medium.cdcce86268fb4a504ff5.otf",
     "static/media/Metropolis-Regular.otf": "/static/media/Metropolis-Regular.67a1988d7b65b0aaa16d.otf",
-    "static/media/delete.png": "/static/media/delete.e346a4a2f172ea5929b6.png",
-    "static/media/edit-1.png": "/static/media/edit-1.9f4528e418b9c96ef497.png",
+    "static/media/edit-2.png": "/static/media/edit-2.76bea0736a3829129f18.png",
     "static/media/right-arrow.png": "/static/media/right-arrow.6dcdb5e340e2f0c01d7b.png",
     "static/media/left-arrow.png": "/static/media/left-arrow.ab9c02af30ea23bb289d.png",
+    "static/media/right-arrow-red.png": "/static/media/right-arrow-red.b459d1b83730433b383e.png",
+    "static/media/right-arrow-pink.png": "/static/media/right-arrow-pink.f7858801195f6d3da72b.png",
+    "static/media/down-arrow-red.png": "/static/media/down-arrow-red.27a78e4de2d113de7bc3.png",
     "index.html": "/index.html",
-    "main.31f15b23.css.map": "/static/css/main.31f15b23.css.map",
-    "main.8eac8a8a.js.map": "/static/js/main.8eac8a8a.js.map",
+    "main.e8a5659b.css.map": "/static/css/main.e8a5659b.css.map",
+    "main.b8305c04.js.map": "/static/js/main.b8305c04.js.map",
     "496.1ef02482.chunk.js.map": "/static/js/496.1ef02482.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.31f15b23.css",
-    "static/js/main.8eac8a8a.js"
+    "static/css/main.e8a5659b.css",
+    "static/js/main.b8305c04.js"
   ]
 }
