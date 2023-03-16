@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 import "../Styles.css";
 import { Buffer } from "buffer";
 import Swal from "sweetalert2";
