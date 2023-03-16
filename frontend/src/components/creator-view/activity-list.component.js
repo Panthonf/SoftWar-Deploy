@@ -38,7 +38,7 @@ const Activity = (props) => {
 						href="#"
 						onClick={() => {
 							Swal.fire({
-								title: "Do you want to delete the Activity?",
+								title: "Do you want to delete this Activity?",
 								showCancelButton: true,
 								confirmButtonText: "Confirm",
 							}).then((result) => {
@@ -115,7 +115,7 @@ export default class ActivityList extends Component {
 	componentDidMount() {
 		const emails = window.localStorage.getItem("activityEmail");
 		axios
-			.get("https://garlicwak.onrender.com/activity/getbyemail/" + emails)
+			.get("http://localhost:5000/activity/getbyemail/" + emails)
 			.then((response) => {
 				this.setState({ activity: response.data });
 			})
@@ -124,7 +124,7 @@ export default class ActivityList extends Component {
 			});
 		// const listName = [];
 		axios
-			.get("https://garlicwak.onrender.com/creatorUsers/creatorUserbyemail/" + emails)
+			.get("http://localhost:5000/creatorUsers/creatorUserbyemail/" + emails)
 			.then((res) => {
 				window.localStorage.setItem(
 					"name",
@@ -138,7 +138,7 @@ export default class ActivityList extends Component {
 
 	deleteActivity(id) {
 		axios
-			.delete("https://garlicwak.onrender.com/activity/" + id)
+			.delete("http://localhost:5000/activity/" + id)
 			.then((res) => console.log(res.data));
 		window.location = "/activityList";
 		this.setState({

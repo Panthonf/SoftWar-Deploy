@@ -35,7 +35,7 @@ export default class projectID extends Component {
   componentDidMount() {
     const arr = window.location.href.split("/");
     axios
-      .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
+      .get("http://localhost:5000/project/" + arr[arr.length - 1])
       .then((res) => {
         this.setState({
           projectName: res.data.projectName,
@@ -120,7 +120,7 @@ export default class projectID extends Component {
                     timerProgressBar: true,
                 }).then(() => {
                     axios
-                        .post("https://garlicwak.onrender.com/feedback/add", data)
+                        .post("http://localhost:5000/feedback/add", data)
                         .then(() => console.log("Success."))
                         .catch((err) => console.log("Error: " + err));
                     window.localStorage.guestVirtualMoney =
@@ -134,6 +134,7 @@ export default class projectID extends Component {
                         Quest: "",
                         Idea: "",
                     });
+                    window.location.reload()
                 });
             } else {
                 //it over
@@ -152,7 +153,6 @@ export default class projectID extends Component {
                         Quest: "",
                         Idea: "",
                     });
-                    window.location.reload()
                 });
             }
         } else {
@@ -406,7 +406,7 @@ class Feedback extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("https://garlicwak.onrender.com/feedback/project/" + arr[arr.length - 1])
+            .get("http://localhost:5000/feedback/project/" + arr[arr.length - 1])
             .then((resp) => {
                 this.setState({ feedBacks: resp.data });
             })
@@ -426,7 +426,7 @@ class Feedback extends Component {
         const arr = window.location.href.split("/");
         axios
             .post(
-                "https://garlicwak.onrender.com/project/updateTotalVirtualMoney/" +
+                "http://localhost:5000/project/updateTotalVirtualMoney/" +
                 arr[arr.length - 1],
                 { totalVirtualMoney: this.showCalculateVirtual() }
             )

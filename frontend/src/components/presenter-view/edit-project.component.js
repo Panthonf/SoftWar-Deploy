@@ -70,7 +70,7 @@ export default class EditProject extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
+            .get("http://localhost:5000/project/" + arr[arr.length - 1])
             .then((res) => {
               // console.log(res.data.projectName);
                 this.setState({
@@ -189,20 +189,18 @@ export default class EditProject extends Component {
         } else {
             axios
                 .post(
-                    "https://garlicwak.onrender.com/project/update/" + this.state.idProj,
+                    "http://localhost:5000/project/update/" + this.state.idProj,
                     dataReq
                 )
                 .then((res) => {
                     if (res.status === 200) {
                         Swal.fire({
-                            title: "Update Project Successfully",
+                            title: "Updated",
                             showConfirmButton: true,
-                        }).then((result) => {
-                            if (result.isConfirmed) {
+                        }).then(() => {
                                 window.location =
                                 "http://localhost:3000/presenterActivityId/" +
                                 window.localStorage.idActivity;
-                            }
                         });
                     }
                 });
@@ -213,7 +211,7 @@ export default class EditProject extends Component {
         return (
             <main>
                 <header>
-                    <Navbar name={window.localStorage.getItem("name")} />
+                    <Navbar name={window.localStorage.PresenterFirstName + " " + window.localStorage.PresenterLastName} />
                 </header>
 
                 {/* topic */}

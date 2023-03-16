@@ -25,7 +25,7 @@ export default class creatorLogin extends Component {
             window.localStorage.setItem("activityEmail", email)
         }
 
-        fetch("https://garlicwak.onrender.com/creatorUsers/login-creator", {
+        fetch("http://localhost:5000/creatorUsers/login-creator", {
             method: "POST",
             crossDomain: true,
             headers: {

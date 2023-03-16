@@ -30,7 +30,7 @@ export default class result extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://garlicwak.onrender.com/project/activity/" +
+        "http://localhost:5000/project/activity/" +
           window.localStorage.getItem("idAct")
       )
       .then((response) => {

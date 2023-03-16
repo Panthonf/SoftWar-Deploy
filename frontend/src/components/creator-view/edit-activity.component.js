@@ -64,7 +64,7 @@ export default class EditActivity extends Component {
         const arr = window.location.href.split("/");
         // console.log(arr);
         axios
-            .get("https://garlicwak.onrender.com/activity/" + arr[arr.length - 1])
+            .get("http://localhost:5000/activity/" + arr[arr.length - 1])
             .then((response) => {
                 // const arr1 = response.data.startTime.split(":00.000Z")
                 // const arr2 = response.data.endTime.split(":00.000Z")
@@ -150,12 +150,12 @@ export default class EditActivity extends Component {
             const arr = window.location.href.split("/");
             axios
                 .post(
-                    "https://garlicwak.onrender.com/activity/update/" + arr[arr.length - 1],
+                    "http://localhost:5000/activity/update/" + arr[arr.length - 1],
                     activity
                 )
                 .then((res) => {
                     Swal.fire({
-                        title: "Added",
+                        title: "Updated",
                         showConfirmButton: true,
                     }).then(() => {
                         window.location = "/activityList"; //relocation to homepage
@@ -338,7 +338,7 @@ export default class EditActivity extends Component {
                     <div className="flex container justify-end my-8 mx-auto w-9/12">
                         <input
                             type="submit"
-                            value="Create Activity"
+                            value="Edit Activity"
                             className="button red p-2 w-48"
                         />
                     </div>

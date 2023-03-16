@@ -19,7 +19,7 @@ export default class ResultTable extends Component {
     componentDidMount() {
         axios
             .get(
-                "https://garlicwak.onrender.com/project/activity/" +
+                "http://localhost:5000/project/activity/" +
                 window.localStorage.getItem("idAct")
             )
             .then((response) => {
@@ -48,7 +48,7 @@ export default class ResultTable extends Component {
 
                     {/* topic */}
                     <div className="grid grid-cols-3 px-12 py-8 items-center text-navy">
-                        <Link to="/" className="">
+                        <Link to="/CreatorResult" className="">
                             <img src={leftarrow} alt="left arrow" className="images-18px" />
                         </Link>
                         <p className="flex text-30px justify-center">

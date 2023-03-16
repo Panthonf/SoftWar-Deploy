@@ -64,7 +64,7 @@ export default class presenterActivityId extends Component {
     }
 
     componentDidMount() {
-        fetch("https://garlicwak.onrender.com/presenterUsers/presenterUserData", {
+        fetch("http://localhost:5000/presenterUsers/presenterUserData", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -86,7 +86,7 @@ export default class presenterActivityId extends Component {
         // console.log(arr[arr.length - 1]);
 
         axios
-            .get("https://garlicwak.onrender.com/presenterUsers/")
+            .get("http://localhost:5000/presenterUsers/")
             .then((res) => {
                 console.log("fff : ", res);
             })
@@ -95,7 +95,7 @@ export default class presenterActivityId extends Component {
             });
 
         axios
-            .get("https://garlicwak.onrender.com/activity/" + arr[arr.length - 1])
+            .get("http://localhost:5000/activity/" + arr[arr.length - 1])
             .then((response) => {
                 this.setState({
                     actName: response.data.actName,
