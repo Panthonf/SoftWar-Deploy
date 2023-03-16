@@ -72,9 +72,6 @@ export default class CreateActivity extends Component {
     }
 
     onChangeActName(e) {
-        //    const data = axios.get("http://localhost:5000/activity/")
-        //    const res = data.then((res)=>res.data);
-
         this.setState({
             actName: e.target.value,
         });
@@ -147,7 +144,7 @@ export default class CreateActivity extends Component {
             console.log(activity);
 
             axios
-                .post("http://localhost:5000/activity/add", activity)
+                .post("https://garlicwak.onrender.com/activity/add", activity)
                 .then((res) => {
                     if (res.status === 200) {
                         Swal.fire("Activity Added !").then((result) => {

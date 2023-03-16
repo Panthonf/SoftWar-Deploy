@@ -56,7 +56,7 @@ export default class CreatorProjectLists extends Component {
 
     componentDidMount() {
         const arr = window.location.href.split("/")
-        axios.get("http://localhost:5000/project/activity/" + arr[arr.length - 1])
+        axios.get("https://garlicwak.onrender.com/project/activity/" + arr[arr.length - 1])
             .then((res) => {
                 this.setState({ projects: res.data })
             })
@@ -65,7 +65,7 @@ export default class CreatorProjectLists extends Component {
 
 
     deleteProject(id) {
-        axios.delete('http://localhost:5000/project/delete/' + id)
+        axios.delete('https://garlicwak.onrender.com/project/delete/' + id)
         // window.location = "/project/"
         this.setState({
             projects: this.state.projects.filter((val) => val.id !== id)
@@ -73,7 +73,7 @@ export default class CreatorProjectLists extends Component {
     };
 
     updateProject(id, data) {
-        axios.post("http://localhost:5000/project/update/" + id, data)
+        axios.post("https://garlicwak.onrender.com/project/update/" + id, data)
 
     }
 
@@ -87,7 +87,7 @@ export default class CreatorProjectLists extends Component {
                         showCancelButton: true
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            axios.delete('http://localhost:5000/project/delete/' + id)
+                            axios.delete('https://garlicwak.onrender.com/project/delete/' + id)
                             window.location.reload()
                         }
                     })

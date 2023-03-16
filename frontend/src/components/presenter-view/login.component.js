@@ -31,7 +31,7 @@ export default class presenterLogin extends Component {
         const { email, password } = this.state;
         console.log(email, password);
 
-        fetch("http://localhost:5000/presenterUsers/login-presenter", {
+        fetch("https://garlicwak.onrender.com/presenterUsers/login-presenter", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -59,7 +59,7 @@ export default class presenterLogin extends Component {
                             window.localStorage.setItem("PresenterEmail", data.email)
                             var code = window.localStorage.getItem("ActCode");
                             console.log("Code : ", code);
-                            axios.get("http://localhost:5000/activity/name/" + code).then((res) => {
+                            axios.get("https://garlicwak.onrender.com/activity/name/" + code).then((res) => {
                                 if (res.status === 200 && res.data.length) {
                                     window.location = "/presenterActivityId/" + res.data[0]._id;
                                 }

@@ -115,7 +115,7 @@ export default class ActivityList extends Component {
 	componentDidMount() {
 		const emails = window.localStorage.getItem("activityEmail");
 		axios
-			.get("http://localhost:5000/activity/getbyemail/" + emails)
+			.get("https://garlicwak.onrender.com/activity/getbyemail/" + emails)
 			.then((response) => {
 				this.setState({ activity: response.data });
 			})
@@ -124,7 +124,7 @@ export default class ActivityList extends Component {
 			});
 		// const listName = [];
 		axios
-			.get("http://localhost:5000/creatorUsers/creatorUserbyemail/" + emails)
+			.get("https://garlicwak.onrender.com/creatorUsers/creatorUserbyemail/" + emails)
 			.then((res) => {
 				window.localStorage.setItem(
 					"name",
@@ -138,7 +138,7 @@ export default class ActivityList extends Component {
 
 	deleteActivity(id) {
 		axios
-			.delete("http://localhost:5000/activity/" + id)
+			.delete("https://garlicwak.onrender.com/activity/" + id)
 			.then((res) => console.log(res.data));
 		window.location = "/activityList";
 		this.setState({

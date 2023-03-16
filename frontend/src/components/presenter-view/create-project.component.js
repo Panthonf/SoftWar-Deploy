@@ -172,7 +172,7 @@ export default class createProject extends Component {
                 showConfirmButton: true,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    axios.post("http://localhost:5000/project/add", reqData);
+                    axios.post("https://garlicwak.onrender.com/project/add", reqData);
                     window.location =
                         "./presenterActivityId/" +
                         window.localStorage.getItem("idActivity");
