@@ -1,66 +1,40 @@
-import axios from "axios";
 import { Component } from "react";
-import "./project-id.component.css";
 import "../Styles.css";
+import "../creator-view/project-id.component.css";
 import { Link } from "react-router-dom";
-import Navbar from "../navbar.component";
+import axios from "axios";
 import like from "../images/heart.png";
 import wish from "../images/christmas-star.png";
 import ques from "../images/question-mark.png";
 import idea from "../images/idea.png";
 import leftarrow from "../images/left-arrow.png";
+import Navbar from "../navbar.component";
 
-
-export default class projectID extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            projectName: "",
-            description: "",
-            members: [],
-        };
-    }
-
-    componentDidMount() {
-        const arr = window.location.href.split("/");
-        axios
-            .get("http://localhost:5000/project/" + arr[arr.length - 1])
-            .then((res) => {
-                this.setState({
-                    projectName: res.data.projectName,
-                    description: res.data.description,
-                    members: res.data.members,
-                });
-            });
-    }
-
-    showButton(email, func) {
-        if (this.state.members.find(elemental => elemental.email === email)) {
-            return func;
-        } else {
-            return;
+export default class PresenterProjectId extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            projectName:"",
+            description:"",
+            members:[],
         }
     }
 
-    buttonEdit() {
-        return (<div>Edit.</div>)
-    }
-
-    buttonDelete() {
-        return (<div>
-            <button onClick={(e) => {
-                const arr = window.location.href.split("/")
-                axios.delete("http://localhost:5000/project/delete/" + arr[arr.length - 1])
-                window.history.back()
-            }}>Delete</button>
-        </div>)
+    componentDidMount(){
+        const arr = window.location.href.split("/");
+        axios.get("http://localhost:5000/project/" + arr[arr.length - 1]).then((resp)=>{
+            this.setState({
+                projectName:resp.data.projectName,
+                description:resp.data.description,
+                members:resp.data.members,
+            })
+        })
     }
 
     renderMember() {
-        return this.state.members.map((x) => {
+        return this.state.members.map((x,index) => {
             return (
-                <div className="flex text-16px bold">
+                <div className="flex text-16px bold" key={index.toString()}>
                     <p className="text-red-it mx-4">|</p>
                     <div className="">{x.name}</div>
                     <p className="mx-1">—</p>
@@ -70,8 +44,10 @@ export default class projectID extends Component {
         })
     }
 
-    render() {
-        return (
+
+
+    render(){
+        return(
             <main>
                 <header>
                     <Navbar name={window.localStorage.getItem("name")} />
@@ -79,7 +55,7 @@ export default class projectID extends Component {
 
                 {/* topic */}
                 <div className="grid grid-cols-3 px-12 py-8 items-center text-navy">
-                    <Link to={"/creatorActivityList/"+window.localStorage.idAct} className="">
+                    <Link to={"/presenterActivityId/"+window.localStorage.idActivity} className="">
                         <img src={leftarrow} alt="left arrow" className="images-18px" />
                     </Link>
                     <p className="flex text-30px justify-center">
@@ -115,20 +91,16 @@ export default class projectID extends Component {
                     </div>
                 </div>
 
-                {/* {this.showButton(window.localStorage.PresenterEmail, this.buttonEdit())}
-                {this.showButton(window.localStorage.PresenterEmail, this.buttonDelete())} */}
-
-                <Feedback />
+                {/* <Feedback /> */}
+                <PresenterFeedBack />
             </main>
-
-
-        );
+        )
     }
 }
 
-const TaskComment = (props) => {
+const PresenterTaskComment = (props) => {
     return (
-        <div className="">
+        <div className="" key={props.key}>
             <div className="grid grid-cols-2 px-8 w-full">
 
                 {/* col1 */}
@@ -175,73 +147,48 @@ const TaskComment = (props) => {
     );
 };
 
-class Feedback extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            feedBacks: [],
-        };
+class PresenterFeedBack extends Component{
+    constructor(props){
+        super(props)
+        this.state={
+            feedbacks:[],
+        }
     }
 
-    showCalculateVirtual() {
-        let total = this.state.feedBacks.reduce(
-            (corr, data) => corr + Number(data.virtualMoney),
-            0
-        );
-
-        return total;
-    }
-
-    componentDidMount() {
-        const arr = window.location.href.split("/");
-        axios
-            .get("http://localhost:5000/feedback/project/" + arr[arr.length - 1])
-            .then((resp) => {
-                this.setState({ feedBacks: resp.data });
-                console.log(resp.data);
+    componentDidMount(){
+        const arr = window.location.href.split("/")
+        axios.get("http://localhost:5000/feedback/project/" + arr[arr.length - 1]).then((resp)=>{
+            this.setState({
+                feedbacks:resp.data
             })
-            .catch((err) => console.log("Error: " + err));
+        }).catch((err) => console.log("Error: " + err));
     }
 
-    // componentDidUpdate() {
-    //   const arr = window.location.href.split("/");
-    //   axios
-    //     .post(
-    //       "http://localhost:5000/project/updateTotalVirtualMoney/" +
-    //         arr[arr.length - 1],
-    //       { totalVirtualMoney: this.showCalculateVirtual() }
-    //     )
-    //     .then((res) => console.log("Update total VP :", res.data))
-    //     .catch((err) => console.log("Error: " + err));
-
-    //   console.log(this.showCalculateVirtual());
-    //   console.log("id :", arr[arr.length - 1]);
-    // }
-
-    showLengthOfList() {
-        return this.state.feedBacks.map((data, index) => {
+    showComment() {
+        return this.state.feedbacks.map((data, index) => {
             return (
                 <div>
-                    <TaskComment
+                    <PresenterTaskComment
+                        key={index}
                         letComments={data.comments}
                         moneyVir={data.virtualMoney}
                     />
                 </div>
             );
         });
-        // const arr2 =  arr.then((data)=>data.map((fete)=>fete))
-        // const sum =  moneyAll.reduce((correct,data)=>correct + Number(data),0)
     }
 
-    render() {
-        return (
-            <div className="items-center justify-center pb-12">
+    showCalculateVirtual() {
+        let total = this.state.feedbacks.reduce(
+            (corr, data) => corr + Number(data.virtualMoney),
+            0
+        );
+        return total;
+    }
 
-                {/* topic */}
-                <div className="w-9/12 mx-auto items-center justify-center py-9">
-                    <p className="text-30px text-navy ">Feedbacks</p>
-                </div>
-
+    showVirtualMoney(){
+        if(new Date().getTime() >= new Date(window.localStorage.endTime).getTime()){
+            return(
                 <div className="flex w-9/12 mx-auto text-navy pb-8">
                     <p className="text-20px text-left bold mr-2">● Total Virtual Money : </p>
 
@@ -250,16 +197,39 @@ class Feedback extends Component {
                     </div>
                     <p className="text-20px text-left">credits</p>
                 </div>
+            )
+        }else{
+            return;
+        }
+    }
+
+    render(){
+        return(
+            <div className="items-center justify-center pb-12">
+
+                {/* topic */}
+                <div className="w-9/12 mx-auto items-center justify-center py-9">
+                    <p className="text-30px text-navy ">Feedbacks</p>
+                </div>
+
+                {/* <div className="flex w-9/12 mx-auto text-navy pb-8">
+                    <p className="text-20px text-left bold mr-2">● Total Virtual Money : </p>
+
+                    <div className="text-20px text-red-it mr-2">
+                    </div>
+                    <p className="text-20px text-left">credits</p>
+                </div> */}
+                {this.showVirtualMoney()}
 
 
                 <div className="w-9/12 mx-auto text-navy">
                     <div className="text-20px bold">● Comments</div>
 
                     <div className="text-16px text-navy mx-auto overflow">
-                        {this.showLengthOfList()}
+                        {this.showComment()}
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 }

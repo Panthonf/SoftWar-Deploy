@@ -6,11 +6,9 @@ import { Buffer } from "buffer";
 import Swal from "sweetalert2";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "../navbar.component";
-// import calendar style
-// You can customize style by copying asset folder.
-// import "@y0c/react-datepicker/assets/styles/calendar_variable.scss";
+import leftarrow from "../images/left-arrow.png";
 
 function makeid(length) {
     let result = '';
@@ -44,10 +42,29 @@ export default class CreateActivity extends Component {
             email: "",
             code: "",
             startTime: new Date(),
-            endTime:new Date(),
+            endTime: new Date(),
             users: [],
         };
     }
+
+    modules = {
+        toolbar: [
+            [{ header: [1, 2, false] }],
+            ["bold", "italic", "underline", "strike", "blockquote"],
+            [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+            ],
+
+            [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+            [{ font: [] }],
+            [{ align: [] }],
+            ["link", "image"],
+            ['clean']
+        ],
+    };
 
     componentDidMount() {
         // this.setState({actName:"test"});
@@ -96,9 +113,9 @@ export default class CreateActivity extends Component {
         });
     }
 
-    onChangeEndTime(e){
+    onChangeEndTime(e) {
         this.setState({
-            endTime:e.target.value,
+            endTime: e.target.value,
         })
     }
 
@@ -106,46 +123,42 @@ export default class CreateActivity extends Component {
     onSubmit(e) {
         e.preventDefault();
         const emails = window.localStorage.activityEmail;
-        console.log(this.state.startTime)
-        if(new Date(this.state.startTime).getTime() >= new Date(this.state.endTime).getTime()){
+        if (new Date(this.state.startTime).getTime() >= new Date(this.state.endTime).getTime()) {
             Swal.fire({
-                title:"Connot use date.",
-                showConfirmButton:true
-            })            
-            
-        }else{
-        const activity = {
-            actName: this.state.actName,
-            actDescription: this.state.actDescription,
-            virtualMoney: this.state.virtualMoney,
-            unitMoney: this.state.unitMoney,
-            code: this.state.code,
-            email: emails,
-            startTime: this.state.startTime,
-            endTime:this.state.endTime,
-        };
-
-        console.log(activity);
-
-        axios
-            .post("https://garlicwak.onrender.com/activity/add", activity)
-            .then((res) => {
-                if (res.status === 200) {
-                    Swal.fire("Activity Added !").then((result) => {
-                        window.location = "/activityList";
-                    });
-                } else {
-                    // alert("Cannot create this Activity !")
-                    Swal.fire("Cannot create this Activity !");
-                }
-                //relocation to homepage
+                title: "Connot use date.",
+                showConfirmButton: true
             })
-            .catch((err) => {
-                if (err) {
-                    // Swal.fire("Cannot use this Activity Name!")
-                    Swal.fire("Cannot create this Activity !");
-                }
-            });
+            this.setState({
+                startTime: "",
+                endTime: "",
+            })
+        } else {
+            const activity = {
+                actName: this.state.actName,
+                actDescription: this.state.actDescription,
+                virtualMoney: this.state.virtualMoney,
+                unitMoney: this.state.unitMoney,
+                code: this.state.code,
+                email: emails,
+                startTime: this.state.startTime,
+                endTime: this.state.endTime,
+            };
+
+            console.log(activity);
+
+            axios
+                .post("http://localhost:5000/activity/add", activity)
+                .then((res) => {
+                    if (res.status === 200) {
+                        Swal.fire("Activity Added !").then((result) => {
+                            window.location = "/activityList";
+                        });
+                    } else {
+                        // alert("Cannot create this Activity !")
+                        Swal.fire("Cannot create this Activity !");
+                    }
+                    //relocation to homepage
+                })
         }
     }
 
@@ -156,27 +169,29 @@ export default class CreateActivity extends Component {
                     <Navbar name={window.localStorage.name} />
                 </header>
 
-                <div className="p-12">
-                    <p className="text-30px text-navy text-center">Create Activity</p>
+                {/* topic */}
+                <div className="grid grid-cols-3 px-12 py-8 items-center text-navy">
+                    <Link to="/" className="">
+                        <img src={leftarrow} alt="left arrow" className="images-18px" />
+                    </Link>
+                    <p className="flex text-30px justify-center">
+                        Create Activity
+                    </p>
                 </div>
 
                 <form onSubmit={this.onSubmit}>
-                    <div
-                        className="grid grid-cols-2 w-9/12 gap-16 mx-auto
-										xs:grid-cols-1
-										sm:grid-cols-1
-										md:grid-cols-1
+                    <div className="grid gap-0 w-9/12 mx-auto text-navy
 										lg:grid-cols-2
-										xl:grid-cols-2
-										2xl:grid-cols-2"
-                    >
+                                        lg:gap-16
+                                    ">
                         {/* col1 */}
                         <div className="justify-center">
+
                             {/* input activity name */}
                             <div className="w-full">
                                 {/* <label className="text-18px bold">Activity Name</label> */}
-                                <label className="text-18px text-navy bold">
-                                    ACTIVITY NAME
+                                <label className="text-20px text-navy bold">
+                                    Activity Name
                                 </label>
                                 <input
                                     className="input mt-4 mb-8 w-full"
@@ -191,8 +206,8 @@ export default class CreateActivity extends Component {
 
                             {/* bullet point for choose virtual money */}
                             <div className="pb-6 text-16px bold">
-                                <ul className="flex items-center w-3/4">
-                                    <li className="w-full">
+                                <div className="flex items-center w-full">
+                                    <div className="w-full">
                                         <div className="flex items-center">
                                             <input
                                                 id="horizontal-list-radio-license"
@@ -205,11 +220,8 @@ export default class CreateActivity extends Component {
                                                     unitMoney: "unit"
                                                 })}
                                             />
-                                            <label for="horizontal-list-radio-license" className="w-full pl-3 pt-1">Default VM</label>
-                                        </div>
-                                    </li>
-                                    <li className="w-full">
-                                        <div className="flex items-center">
+                                            <label for="horizontal-list-radio-license" className="w-full pl-3 pt-1">Default Virtual Money</label>
+
                                             <input
                                                 id="horizontal-list-radio-license"
                                                 type="radio"
@@ -221,20 +233,29 @@ export default class CreateActivity extends Component {
                                                     unitMoney: ""
                                                 })}
                                             />
-                                            <label for="horizontal-list-radio-license" className="w-full pl-3 pt-1">Customize VM</label>
+                                            <label for="horizontal-list-radio-license" className="w-full pl-3 pt-1">Customize Virtual Money</label>
                                         </div>
-                                    </li>
-                                </ul>
+                                    </div>
+                                </div>
                             </div>
 
-                            {/* input virtual money and unit grid*/}
-                            <div className="grid grid-cols-2 gap-4">
+                            {/* input activity name */}
+                            <div className="w-full">
 
-                                {/* virtual money container */}
-                                <div className="w-full">
-                                    <label className="text-18px text-navy bold">
-                                        VIRTUAL MONEY / GUEST
+                                {/* grid1 */}
+                                <div className="grid grid-cols-2 gap-2">
+                                    <label className="text-20px text-navy bold">
+                                        Virtual Money / Guest
                                     </label>
+
+                                    <label className="text-20px text-navy bold" for="grid-last-name">
+                                        Unit
+                                    </label>
+                                </div>
+
+                                {/* grid2 */}
+                                <div className="grid grid-cols-2 gap-2">
+
                                     {/* virtual money container */}
                                     <div className="flex w-full">
                                         <input
@@ -246,16 +267,7 @@ export default class CreateActivity extends Component {
                                             onChange={this.onChangeVirtualMoney}
                                             placeholder="Enter Virtual Money"
                                         />
-
                                     </div>
-
-                                </div>
-
-                                {/* unit container */}
-                                <div className="w-full">
-                                    <label className="text-18px bold text-navy" for="grid-last-name">
-                                        UNIT
-                                    </label>
 
                                     {/* unit container */}
                                     <div class="w-full">
@@ -272,10 +284,19 @@ export default class CreateActivity extends Component {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        {/* col2 */}
+                        <div className="justify-center">
+
+                            <div className="pb-8">
+                                <label className="text-20px bold text-navy">Date and Time</label>
+                            </div>
+
 
                             {/* input date */}
-                            <div className="w-full grid">
-                                <label className="text-18px bold text-navy">START TIME</label>
+                            <div className="w-full pl-6">
+                                <label className="text-16px bold text-navy">Start</label>
 
                                 <input type="datetime-local"
                                     selected={this.state.startTime}
@@ -284,8 +305,8 @@ export default class CreateActivity extends Component {
                                     className="input mt-4 mb-8 w-full"></input>
                             </div>
 
-                            <div className="w-full grid">
-                                <label className="text-18px bold text-navy">END TIME</label>
+                            <div className="w-full pl-6">
+                                <label className="text-16px bold text-navy">End</label>
 
                                 <input type="datetime-local"
                                     selected={this.state.endTime}
@@ -294,22 +315,11 @@ export default class CreateActivity extends Component {
                                     className="input mt-4 mb-8 w-full"></input>
                             </div>
                         </div>
-
-                        {/* col2 */}
-                        <div className="justify-center">
-                            <div className="w-full">
-                                {/* <label className="text-18px bold">Activity Name</label> */}
-                                <label className="text-18px text-navy bold">
-                                    ADD COMMITTEE
-                                </label>
-
-                            </div>
-                        </div>
                     </div>
 
                     {/* description */}
                     <div className="justify-center w-9/12 mx-auto">
-                        <label className="text-18px bold text-navy">DESCRIPTION</label>
+                        <label className="text-20px bold text-navy">Description</label>
                         <ReactQuill
                             theme="snow"
                             className="mt-4 mb-8"
@@ -323,7 +333,7 @@ export default class CreateActivity extends Component {
                         />
                     </div>
 
-                    <div className="container justify-end my-8 mx-auto w-9/12">
+                    <div className="flex container justify-end my-8 mx-auto w-9/12">
                         <input
                             type="submit"
                             value="Create Activity"

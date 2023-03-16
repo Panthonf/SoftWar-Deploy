@@ -29,15 +29,11 @@ export default class navbar extends Component {
                             <div class="opacity-0 invisible dropdown-menu transition-all duration-300">
                                 <div class="absolute right-0 w-56 mt-2 rounded-lg bg-pink">
 
-                                    <div class="py-1">
-                                        <button class="flex justify-between w-full px-4 py-2 text-14px text-navy bold"
-                                            onClick={(e) => {
-                                            localStorage.clear()
-                                            window.location = "/"
-                                        }}>
-                                            Log out |
-                                        </button>
+                                    <div class="justify-center items-center w-full px-4 py-2">
+                                        <p className="text-14px text-navy bold mr-2">Total virtual money :</p>
+                                        <p className="text-16px text-red-it bold text-center">{window.localStorage.guestVirtualMoney}</p>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

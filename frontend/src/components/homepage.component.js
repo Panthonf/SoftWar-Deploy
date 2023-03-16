@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./homepage.component.css";
-import rightarrow from "./images/right-arrow.png";
-import qr from "./images/qr-code - 1.png";
+import rightarrowpink from "./images/right-arrow-pink.png";
+import welcome from "./images/welcom-png.png";
+// import welcomePng from "./images/welcompng.png"
+import qr from "./images/qr-code-pink.png";
 import "./homepage.component.css";
 import "./Styles.css";
 import axios from "axios";
@@ -81,12 +83,12 @@ export default class homepage extends Component {
 		}
 
 		axios
-			.get("https://garlicwak.onrender.com/activity/name/" + code.code)
-			.then((res) =>{
+			.get("http://localhost:5000/activity/name/" + code.code)
+			.then((res) => {
 				// console.log(res.data.length)
-				if(res.status === 200 && res.data.length){
+				if (res.status === 200 && res.data.length) {
 					window.location = "./access/" + code.code;
-				}else{
+				} else {
 					Swal.fire({
 						position: "top",
 						icon: "error",
@@ -96,14 +98,14 @@ export default class homepage extends Component {
 					})
 				}
 			})
-			.catch((err) => 
-			Swal.fire({
-							position: "top",
-							icon: "error",
-							title: "Wrong Code",
-							showConfirmButton: false,
-							timer: 1500,
-						})
+			.catch((err) =>
+				Swal.fire({
+					position: "top",
+					icon: "error",
+					title: "Wrong Code",
+					showConfirmButton: false,
+					timer: 1500,
+				})
 			);
 
 		// axios.get("http://localhost:5000/activity/").then((res) => {
@@ -137,39 +139,25 @@ export default class homepage extends Component {
 	render() {
 		return (
 			<main>
-				<div className="navbar-container right gap-2">
-					<Link to="/createActivity" className="text-16px bold">
-						Create Activity
-					</Link>
-					<Link to="/activityList" className="text-16px bold">
-						Creator Activity View
-					</Link>
-					<Link to="/guestActivityList" className="text-16px bold">
-						Guest Activity View
-					</Link>
-					<Link to="/createProject" className="text-16px">
-						Presenter View
-					</Link>
-				</div>
+				<div className="grid banner
+								lg:grid-cols-2
+								">
 
-				<div className="banner">
 					{/* creator side */}
-					<div className="banner-container left">
+					<div className="block banner-container left">
 
-						<div className="my-8">
-							<Link to="/" className="text-16px text-navy bold">GARLICWAK</Link>
+						<div className="flex pt-12  mx-auto">
+							<a href="/"><p className="text-48px text-navy bold goback">GARLICWAK</p></a>
 						</div>
 
-						<div className="line-horizon"></div>
 
-						<div className="">
-							<p className="text-36px my-8 text-navy">Creator!</p>
+						<div className="pt-8">
+							<p className="text-36px my-8 text-navy">Be Activity Creator!</p>
 							<p className="text-18px text-navy">
-								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente
-								dignissimos non quis illo
+								Create, Organize and Invite people to join your Activity!
 							</p>
 
-							<div className="container justify-start my-8">
+							<div className="flex container justify-start my-8">
 								<Link
 									to="/creatorLogin"
 									className="button red p-2 w-48 text-18x">
@@ -178,30 +166,96 @@ export default class homepage extends Component {
 							</div>
 
 							<div className="text-right">
-								<p className="text-36px my-8 text-navy">Welcome</p>
-								<p className="text-18px text-navy">
-									Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente
-									dignissimos non quis illo
+								<p className="text-36px my-8 text-navy">Join Activity!</p>
+								<p className="text-18px text-navy pl-20 pb-6 mx-auto">
+									Be a Presenter and add your project into Activity! or Be a guest, explore projects and give them feedbacks!
 								</p>
 
-								<div className="container justify-end">
-									<form
-										onSubmit={this.onEnterCode}
-										className="flex items-center justify-center">
+								<div className="flex container justify-end mt-4 mb-8
+												">
+
+									<form onSubmit={this.onEnterCode} className="flex">
+										<div className="flex justify-end">
+											{/* col1 */}
+											<div class="flex relative w-full">
+												<input
+													onChange={this.onChangeCode}
+													type="text"
+													placeholder="Enter Code"
+													maxLength="8"
+													autoComplete="off"
+													className="input-code text-light-pink h-11 w-72 px-6"
+												/>
+
+												<button type="submit" class="absolute top-0 right-0 p-2.5">
+													<img
+														alt=""
+														type="submit"
+														src={rightarrowpink}
+														className="images-20px" />
+												</button>
+											</div>
+										</div>
+
+										{/* col2 */}
+										<div className="flex items-center text-navy">
+											<p className="text-18px bold mx-3">OR</p>
+
+											<Link to="/scanner">
+												<div className="bg-red-it p-1.5 rounded-lg">
+													<img src={qr} className="images-25px" alt="" />
+												</div>
+											</Link>
+										</div>
+
+
+									</form>
+
+
+
+
+
+									{/* <form onSubmit={this.onEnterCode}>
 										<input
 											onChange={this.onChangeCode}
 											type="text"
 											placeholder="Enter Code"
 											maxLength="8"
 											autoComplete="off"
-											className="input-code"
+											className="inputcode text-light-pink"
+										></input>
+
+										<button type="submit">
+											<img
+												alt=""
+												src={rightarrowpink}
+												className="images-20px"
+												// onClick={this.onEnterCode}
+												type="submit"
+											/>
+										</button>
+									</form> */}
+
+
+
+
+									{/* <form
+										onSubmit={this.onEnterCode}
+										className="absolute flex items-center justify-center">
+										<input
+											onChange={this.onChangeCode}
+											type="text"
+											placeholder="Enter Code"
+											maxLength="8"
+											autoComplete="off"
+											className="input-code text-light-pink"
 										></input>
 
 										<div className="icon-container">
 											<button type="submit">
 												<img
 													alt=""
-													src={rightarrow}
+													src={rightarrowpink}
 													className="images-20px"
 													// onClick={this.onEnterCode}
 													type="submit"
@@ -209,14 +263,17 @@ export default class homepage extends Component {
 											</button>
 										</div>
 
-										<div className="line-vertical" />
+									
+										
+									</form> */}
+								</div>
 
-										<p className="text-20px bold mx-4">OR</p>
+								<div className="flex container justify-center text-navy 
+												lg:justify-end">
 
-										<Link to="/scanner">
-											<img src={qr} className="images-20px ml-2.5" alt="" />
-										</Link>
-									</form>
+
+
+
 								</div>
 							</div>
 						</div>
@@ -224,7 +281,9 @@ export default class homepage extends Component {
 
 					</div>
 					{/* presenter and guest side */}
-					<div className="banner-container right"></div>
+					<div className="banner-container right flex justify-center">
+						<img src={welcome} alt=""/>
+					</div>
 				</div>
 			</main>
 		);

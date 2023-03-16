@@ -32,7 +32,7 @@ const ActivityList = (props) => (
 				<Link to={"/guestActivityList/" + props.activity._id}>
 					<div className="flex items-center">
 						<p className="text-12px bold mr-1">SEE PROJECT</p>
-						<img src={rightarrow} alt="right arrow" className="images-16px" />
+						<img src={rightarrow} alt="" className="images-16px" />
 					</div>
 				</Link>
 			</div>
@@ -100,7 +100,7 @@ export default class guestActivityList extends Component {
 
 	componentDidMount() {
 		axios
-			.get("https://garlicwak.onrender.com/activity/")
+			.get("http://localhost:5000/activity/")
 			.then((response) => {
 				this.setState({ activity: response.data });
 			})
@@ -111,7 +111,7 @@ export default class guestActivityList extends Component {
 
 	deleteActivity(id) {
 		axios
-			.delete("https://garlicwak.onrender.com/activity/" + id)
+			.delete("http://localhost:5000/activity/" + id)
 			.then((res) => console.log(res.data));
 		window.location = "/activityList";
 		this.setState({

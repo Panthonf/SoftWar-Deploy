@@ -8,7 +8,7 @@ export default class presenterDashboard extends Component {
     };
   }
   componentDidMount() {
-    fetch("https://garlicwak.onrender.com/presenterUsers/presenterUserData", {
+    fetch("http://localhost:5000/presenterUsers/presenterUserData", {
       method: "POST",
       crossDomain: true,
       headers: {

@@ -8,16 +8,16 @@ import leftarrow from "../images/left-arrow.png";
 import cross from "../images/cross.png";
 
 export default class EditProject extends Component {
-    constructor (props) {
-        super(props)
+    constructor(props) {
+        super(props);
         this.onChangeProjectDescript = this.onChangeProjectDescript.bind(this);
         this.onChangeProjectName = this.onChangeProjectName.bind(this);
-        this.showAllMembers = this.showAllMembers.bind(this)
-        this.deleteMember = this.deleteMember.bind(this)
-        this.addMember = this.addMember.bind(this)
-        this.onChangeEmail = this.onChangeEmail.bind(this)
-        this.onChangeName = this.onChangeName.bind(this)
-        this.onAddEvent = this.onAddEvent.bind(this)
+        this.showAllMembers = this.showAllMembers.bind(this);
+        this.deleteMember = this.deleteMember.bind(this);
+        this.addMember = this.addMember.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
+        this.onAddEvent = this.onAddEvent.bind(this);
 
         this.state = {
             idProj: "",
@@ -26,54 +26,96 @@ export default class EditProject extends Component {
             members: [],
             name: "",
             email: "",
-        }
+        };
     }
+
+    modules = {
+        toolbar: [
+            [{ header: [1, 2, false] }],
+            ["bold", "italic", "underline", "strike", "blockquote"],
+            [
+                { list: "ordered" },
+                { list: "bullet" },
+                { indent: "-1" },
+                { indent: "+1" },
+            ],
+
+            [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+            [{ font: [] }],
+            [{ align: [] }],
+            ["link", "image"],
+            ['clean']
+        ],
+    };
+
+    formats = [
+        "clean",
+        "background",
+        "font",
+        "align",
+        "color",
+        "header",
+        "bold",
+        "italic",
+        "underline",
+        "strike",
+        "blockquote",
+        "list",
+        "bullet",
+        "indent",
+        "link",
+        "image",
+    ];
 
     componentDidMount() {
-        const arr = window.location.href.split("/")
-        axios.get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1]).then((res) => {
-            this.setState({
-                idProj: arr[arr.length - 1],
-                projectName: res.data.projectName,
-                projectDescript: res.data.description,
-                members: res.data.members
-            })
-        })
+        const arr = window.location.href.split("/");
+        axios
+            .get("http://localhost:5000/project/" + arr[arr.length - 1])
+            .then((res) => {
+              // console.log(res.data.projectName);
+                this.setState({
+                    idProj: arr[arr.length - 1],
+                    projectName: res.data.projectName,
+                    projectDescript: res.data.description,
+                    members: res.data.members,
+                });
+            });
     }
 
-    onChangeName(data){
+    onChangeName(data) {
         this.setState({
-            name:data.target.value
-        })
+            name: data.target.value,
+        });
     }
 
-    onChangeEmail(data){
+    onChangeEmail(data) {
         this.setState({
-            email:data.target.value
-        })
+            email: data.target.value,
+        });
     }
 
     onChangeProjectName(data) {
+      // console.log(this.state.projectName);
         this.setState({
-            projectName: data.target.value
-        })
+            projectName: data.target.value,
+        });
     }
 
-    onChangeProjectDescript(content,delta,source,editor) {
-        console.log(editor.getHTML())
+    onChangeProjectDescript(content, delta, source, editor) {
+        console.log(editor.getHTML());
         this.setState({
-            projectDescript: editor.getHTML()
-        })
+            projectDescript: editor.getHTML(),
+        });
     }
 
     deleteMember(data) {
         // const search = this.state.members.find(x=>x === data)
-        const index = this.state.members.indexOf(data)
-        const copy = this.state.members
-        copy.splice(index, 1)
+        const index = this.state.members.indexOf(data);
+        const copy = this.state.members;
+        copy.splice(index, 1);
         this.setState({
-            members: copy
-        })
+            members: copy,
+        });
     }
 
     showAllMembers() {
@@ -85,68 +127,85 @@ export default class EditProject extends Component {
                     <div>{x.email}</div>
 
                     <div className="text-12px justify-left items-center pl-6 my-auto">
-                        <img src={cross} alt="cross" className="images-16px" onClick={(e) => this.deleteMember(x)} />
+                        <img
+                            src={cross}
+                            alt=""
+                            className="images-16px"
+                            onClick={(e) => this.deleteMember(x)}
+                        />
                     </div>
                 </div>
-            // <div>
-            //     <p>{x.name}</p>
-            //     <p>{x.email}</p>
-            //     <button onClick={(e) => {
-            //         this.deleteMember(x)
-            //     }}>Dele</button>
-            // </div>
-            )
-        })
+                // <div>
+                //     <p>{x.name}</p>
+                //     <p>{x.email}</p>
+                //     <button onClick={(e) => {
+                //         this.deleteMember(x)
+                //     }}>Dele</button>
+                // </div>
+            );
+        });
     }
 
     addMember(e) {
-        e.preventDefault()
+        e.preventDefault();
         if (this.state.name !== "" && this.state.email !== "") {
             const data = {
-                name: this.state.name, email: this.state.email
-            }
+                name: this.state.name,
+                email: this.state.email,
+            };
 
             this.setState({
                 members: [...this.state.members, data],
                 name: "",
-                email: ""
-            })
-        } else{
+                email: "",
+            });
+        } else {
             Swal.fire({
                 title: "Cannot add this email & username",
                 showConfirmButton: true,
-            })
+            });
         }
     }
 
     onAddEvent(e) {
-        e.preventDefault()
-        const arr = window.location.href.split("/")
-        console.log(this.state.members)
+        e.preventDefault();
+        // const arr = window.location.href.split("/");
+        // console.log(this.state.members);
         const dataReq = {
             projectName: this.state.projectName,
             description: this.state.projectDescript,
             members: this.state.members,
-        }
+        };
 
         if (this.state.members.length === 0) {
             Swal.fire({
-                title: "You should be add 1 Member.",
-                showConfirmButton: true
-            })
+              title: "Please, input 1 or more Project Members.",
+              showConfirmButton: true,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location ='/'
+              }
+            });
         } else {
-            axios.post("https://garlicwak.onrender.com/project/update/" + this.state.idProj, dataReq).then((res) => {
-                if (res.status === 200) {
-                    Swal.fire({
-                        title: "Update Project Successfully",
-                        showConfirmButton: true,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location = "http://localhost:3000/creatorprojectList/"+arr[arr.length - 1]
-                        }
-                    });
-                }
-            })
+            axios
+                .post(
+                    "http://localhost:5000/project/update/" + this.state.idProj,
+                    dataReq
+                )
+                .then((res) => {
+                    if (res.status === 200) {
+                        Swal.fire({
+                            title: "Update Project Successfully",
+                            showConfirmButton: true,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location =
+                                "http://localhost:3000/presenterActivityId/" +
+                                window.localStorage.idActivity;
+                            }
+                        });
+                    }
+                });
         }
     }
 
@@ -158,42 +217,39 @@ export default class EditProject extends Component {
                 </header>
 
                 {/* topic */}
-                <div className="px-12 py-8 items-center">
-
-                    <p className="flex text-30px text-left text-navy">
-                        <Link to="/ActivityList" className="flex">
-                            <img src={leftarrow} alt="left arrow" className="images-18px mr-2 mt-1.5" />
-                            Edit Project
-                        </Link>
-
+                <div className="grid grid-cols-3 px-12 py-8 items-center text-navy">
+                    <Link to={"/presenterActivityId/"+window.localStorage.idActivity} className="">
+                        <img src={leftarrow} alt="left arrow" className="images-18px" />
+                    </Link>
+                    <p className="flex text-30px justify-center">
+                        Edit Project
                     </p>
                 </div>
 
-                <form onSubmit={this.onAddEvent}>
-                    <div className="mx-auto w-9/12 jusstify-center text-navy">
-
-                        <div className="justify-center">
-
-                            {/* input activity name */}
-                            <div className="w-full">
-                                <label className="text-20px bold">Project Name</label>
-                                <input
-                                    className="input mt-4 mb-8 w-full"
-                                    id="projectName"
-                                    name="projectName"
-                                    type="text"
-                                    value={this.state.projectName}
-                                    onChange={this.onchangeProjectName}
-                                    placeholder="Enter your Project Name"
-                                />
-                            </div>
+        <form onSubmit={this.onAddEvent}>
+          <div className="mx-auto w-9/12 jusstify-center text-navy">
+            <div className="justify-center">
+              {/* input activity name */}
+              <div className="w-full">
+                <label className="text-20px bold">Project Name</label>
+                <input
+                  className="input mt-4 mb-8 w-full"
+                  id="projectName"
+                  name="projectName"
+                  type="text"
+                  value={this.state.projectName}
+                  onChange={this.onChangeProjectName}
+                  placeholder="Enter your Project Name"
+                />
+              </div>
 
                             {/* input activity name */}
                             <div className="w-full">
-                                <label className="text-20px bold" for="grid-last-name">Team Members</label>
+                                <label className="text-20px bold" for="grid-last-name">
+                                    Team Members
+                                </label>
                                 {this.showAllMembers()}
                                 <div className="grid grid-cols-5 gap-4 w-full">
-
                                     <div className="col-span-2">
                                         <input
                                             className="input mt-4 mb-8 w-full"
@@ -215,13 +271,18 @@ export default class EditProject extends Component {
                                             type="text"
                                             value={this.state.email}
                                             onChange={this.onChangeEmail}
-                                            placeholder="Enter Email Name"
+                                            placeholder="Enter Email"
                                             autoComplete="off"
                                         />
                                     </div>
 
                                     <div className="col-span-1 justify-center mx-auto pt-4">
-                                        <input type="submit" value="Add" className="button red p-1 w-20" onClick={this.addMember} />
+                                        <input
+                                            type="submit"
+                                            value="Add"
+                                            className="button red p-1 w-20"
+                                            onClick={this.addMember}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -230,27 +291,32 @@ export default class EditProject extends Component {
                         {/* col2 */}
                         <div className="justify-center">
                             <div className="justify-center w-full mx-auto">
-                                <label className="text-20px bold text-navy">Project Description</label>
+                                <label className="text-20px bold text-navy">
+                                    Project Description
+                                </label>
                                 <ReactQuill
                                     theme="snow"
                                     className="mt-4 mb-8"
                                     value={this.state.projectDescript}
                                     onChange={this.onChangeProjectDescript}
-                                    // modules={this.modules}
-                                    // formats={this.formats}
+                                    modules={this.modules}
+                                    formats={this.formats}
                                     placeholder="Enter your Project Description "
                                 />
                             </div>
                         </div>
-
                     </div>
 
-                    <div className="container justify-end my-8 mx-auto w-9/12">
-                        <input type="submit" value="Submit" className="button red p-2 w-48" />
+                    <div className="flex container justify-end my-8 mx-auto w-9/12">
+                        <input
+                            type="submit"
+                            value="Submit"
+                            className="button red p-2 w-48"
+                        />
                     </div>
-
                 </form>
             </main>
+
             // <div>
             //     <form onSubmit={this.onAddEvent}>
             //         <div>Project Name</div>
@@ -269,6 +335,6 @@ export default class EditProject extends Component {
             //         <input type="submit" value="Submit" />
             //     </form>
             // </div>
-        )
+        );
     }
 }

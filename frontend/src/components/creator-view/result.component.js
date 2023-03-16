@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { Component } from "react";
 import Chart from "./Chart";
 import { Link } from "react-router-dom";
+import Navbar from "../navbar.component";
+import leftarrow from "../images/left-arrow.png";
 
 const options = {
   plugins: {
@@ -28,7 +30,7 @@ export default class result extends Component {
   componentDidMount() {
     axios
       .get(
-        "https://garlicwak.onrender.com/project/activity/" +
+        "http://localhost:5000/project/activity/" +
           window.localStorage.getItem("idAct")
       )
       .then((response) => {
@@ -88,40 +90,67 @@ export default class result extends Component {
             size: 16,
           },
           data: totalVirtualMoney,
-          backgroundColor: ["#2196F3", "#4CAF50", "#FFC107"],
-          borderColor: "#000",
-          borderWidth: "10px",
+          backgroundColor: ["#DB4D4B", "#FCC5C0", "#FAE7E7"],
+          usePointStyle: false,
         },
       ],
     };
 
     return (
-      <div>
+      <main>
         <header>
-          <div className="grid grid-cols-2 navbar my-8 items-center">
-            <Link to="/" className="">
-              <p className="text-16px bold text-navy">GARLICWAK</p>
-            </Link>
+          <Navbar name={window.localStorage.getItem("name")} />
+        </header>
 
-            <div className="container justify-end">
-              <p className="text-16px bold text-red-it">
-                {window.localStorage.getItem("name")}
-              </p>
-            </div>
+        <div className="items-center justify-center pb-12">
+          {/* topic */}
+          <div className="grid grid-cols-3 px-12 py-8 items-center text-navy">
+            <Link
+              to={"/creatorActivityList/" + window.localStorage.idAct}
+              className=""
+            >
+              <img src={leftarrow} alt="left arrow" className="images-18px" />
+            </Link>
+            <p className="flex text-30px justify-center">Summarized</p>
           </div>
 
-          <div className="line-horizon px-12 mx-12"></div>
-        </header>
-        <div className="flex justify-center mt-8 text-xl font-bold">
-          SUMMARIZED
+          <div className="w-8/12 mx-auto">
+            <Chart data={data} options={options} />
+          </div>
+
+          <div className="flex justify-center pt-10">
+            <Link to="/ResultTable" className="button red p-2 w-60 text-center">
+              See All Project
+            </Link>
+          </div>
         </div>
-        <div className="mx-80 mt-4">
-          <Chart data={data} options={options} />
-        </div>
-        <div className="flex justify-center mt-4">
-          <Link to='/ResultTable' className="bg-gray-300 p-2 rounded-md hover:bg-green-300 text-white">All Project</Link>
-        </div>
-      </div>
+      </main>
+      // <div>
+      //     <header>
+      //         <div className="grid grid-cols-2 navbar my-8 items-center">
+      //             <Link to="/" className="">
+      //                 <p className="text-16px bold text-navy">GARLICWAK</p>
+      //             </Link>
+
+      //             <div className="container justify-end">
+      //                 <p className="text-16px bold text-red-it">
+      //                     {window.localStorage.getItem("name")}
+      //                 </p>
+      //             </div>
+      //         </div>
+
+      //         <div className="line-horizon px-12 mx-12"></div>
+      //     </header>
+      //     <div className="flex justify-center mt-8 text-xl font-bold">
+      //         SUMMARIZED
+      //     </div>
+      //     <div className="mx-80 mt-4">
+      //         <Chart data={data} options={options} />
+      //     </div>
+      //     <div className="flex justify-center mt-4">
+      //         <Link to='/ResultTable' className="bg-gray-300 p-2 rounded-md hover:bg-green-300 text-white">All Project</Link>
+      //     </div>
+      // </div>
     );
   }
 }

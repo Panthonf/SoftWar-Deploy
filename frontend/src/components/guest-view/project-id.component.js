@@ -3,7 +3,7 @@ import Swire from "sweetalert2";
 import { Component } from "react";
 import leftarrow from "../images/left-arrow.png";
 import { Link } from "react-router-dom";
-import Navbar from "../navbar.component";
+import Navbar from "../navbarguest.component";
 import like from "../images/heart.png";
 import wish from "../images/christmas-star.png";
 import ques from "../images/question-mark.png";
@@ -19,59 +19,74 @@ export default class projectID extends Component {
         this.virtualMoneyOnChange = this.virtualMoneyOnChange.bind(this);
         this.onSubmitAction = this.onSubmitAction.bind(this);
 
-        this.state = {
-            projectName: "",
-            description: "",
-            members: [],
-            storeVirtualMoney: "",
-            ILike: "",
-            IWish: "",
-            Quest: "",
-            Idea: "",
-            feedBacks: [],
-        };
-    }
+    this.state = {
+      projectName: "",
+      description: "",
+      members: [],
+      storeVirtualMoney: "",
+      ILike: "",
+      IWish: "",
+      Quest: "",
+      Idea: "",
+      feedBacks: [],
+    };
+  }
 
-    componentDidMount() {
-        const arr = window.location.href.split("/");
-        axios
-            .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
-            .then((res) => {
-                this.setState({
-                    projectName: res.data.projectName,
-                    description: res.data.description,
-                    members: res.data.members,
-                });
-            });
-    }
-
-    virtualMoneyOnChange(number) {
+  componentDidMount() {
+    const arr = window.location.href.split("/");
+    axios
+      .get("http://localhost:5000/project/" + arr[arr.length - 1])
+      .then((res) => {
         this.setState({
-            storeVirtualMoney: number,
+          projectName: res.data.projectName,
+          description: res.data.description,
+          members: res.data.members,
         });
-    }
+      });
+  }
 
-    commentILikeOnChange(texts) {
-        this.setState({
-            ILike: texts.target.value,
-        });
-    }
+  virtualMoneyOnChange(number) {
+    this.setState({
+      storeVirtualMoney: number,
+    });
+  }
 
-    commentIWishOnChange(texts) {
-        this.setState({
-            IWish: texts.target.value,
-        });
-    }
+  commentILikeOnChange(texts) {
+    this.setState({
+      ILike: texts.target.value,
+    });
+  }
 
-    commentQuestionOnChange(texts) {
-        this.setState({
-            Quest: texts.target.value,
-        });
-    }
+  commentIWishOnChange(texts) {
+    this.setState({
+      IWish: texts.target.value,
+    });
+  }
 
-    commentIdeaOnChange(texts) {
-        this.setState({
-            Idea: texts.target.value,
+  commentQuestionOnChange(texts) {
+    this.setState({
+      Quest: texts.target.value,
+    });
+  }
+
+  commentIdeaOnChange(texts) {
+    this.setState({
+      Idea: texts.target.value,
+    });
+  }
+
+
+    
+    showMembers() {
+        return this.state.members.map((x) => {
+            return (
+                <div className="flex text-16px bold">
+                    <div className="">{x.name}</div>
+                    <p className="mx-1">—</p>
+                    <div>{x.email}</div>
+                    <p className="text-red-it mx-4">|</p>
+                </div>
+            );
         });
     }
 
@@ -97,23 +112,38 @@ export default class projectID extends Component {
                 Number(this.state.storeVirtualMoney);
             if (calculate >= 0) {
                 //not over
-                Swire.fire("Done !").then(() => {
-                    // axios.post("http://localhost:5000/feedback/add", data)
-                    // .then(() => console.log("Success"))
-                    // .catch((err) => console.log("Error: " + err));
+                Swire.fire({
+                    title: "Give Virtual Money Successfully",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                }).then(() => {
                     axios
-                        .post("https://garlicwak.onrender.com/feedback/add", data)
+                        .post("http://localhost:5000/feedback/add", data)
                         .then(() => console.log("Success."))
                         .catch((err) => console.log("Error: " + err));
                     window.localStorage.guestVirtualMoney =
                         Number(window.localStorage.guestVirtualMoney) -
                         this.state.storeVirtualMoney;
-                    window.location = "";
+                    this.setState({
+                        feedBacks: [...this.state.feedBacks, data],
+                        virtualMoney: "",
+                        ILike: "",
+                        IWish: "",
+                        Quest: "",
+                        Idea: "",
+                    });
                 });
             } else {
                 //it over
-                Swire.fire(
-                    `Cannot You have ${window.localStorage.guestVirtualMoney}`
+                Swire.fire({
+                    title: `Not enough Virtual Money : You have ${window.localStorage.guestVirtualMoney}`,
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                }
                 ).then(() => {
                     this.setState({
                         storeVirtualMoney: "",
@@ -122,7 +152,7 @@ export default class projectID extends Component {
                         Quest: "",
                         Idea: "",
                     });
-                    window.location = "";
+                    window.location.reload()
                 });
             }
         } else {
@@ -143,16 +173,125 @@ export default class projectID extends Component {
         // }
     }
 
-    showMembers() {
-        return this.state.members.map((x) => {
-            return (
-                <div className="flex text-16px bold">
-                    <div className="">● {x.name}</div>
-                    <p className="mx-1">—</p>
-                    <div>{x.email}</div>
+    showFormFeedback(){
+        console.log(new Date(window.localStorage.endAct))
+        if(new Date().getTime() >= new Date(window.localStorage.endAct)){
+            return(
+                <div>
+                    EndTime
                 </div>
-            );
-        });
+            )
+        }else{
+            return(
+                <div className="items-center justify-center">
+                    <form onSubmit={this.onSubmitAction}>
+                        {/* topic */}
+                        <div className="w-9/12 mx-auto items-center justify-center pb-9">
+                            <p className="text-30px text-navy">Give Feedbacks</p>
+                        </div>
+
+                        <div className="flex w-9/12 mx-auto text-navy pb-8">
+                            <p className="text-20px text-left w-1/4 mr-4 pt-1 bold">
+                                ● Give Virtual Money
+                            </p>
+
+                            <div className="items-center w-full">
+                                <input
+                                    className="input"
+                                    // id="projectName"
+                                    // name="projectName"
+                                    type="number"
+                                    value={this.state.virtualMoney}
+                                    onChange={(e) => this.virtualMoneyOnChange(e.target.value)}
+                                    placeholder="Enter Virtual Money"
+                                    min="0"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="w-9/12 mx-auto text-navy">
+                            <div className="text-20px bold">● Give Comments</div>
+
+                            <div className="flex">
+                                <div className="pt-6 mr-4">
+                                    <img src={like} alt="" className="images-20px" />
+                                </div>
+
+                                <input
+                                    // required
+                                    className="input mt-4 mb-8 w-full"
+                                    id="ILike"
+                                    name="ILike"
+                                    type="text"
+                                    value={this.state.ILike}
+                                    onChange={this.commentILikeOnChange}
+                                    placeholder="What do you like about this project?"
+                                />
+                            </div>
+
+                            <div className="flex">
+                                <div className="pt-6 mr-4">
+                                    <img src={wish} alt="" className="images-20px" />
+                                </div>
+
+                                <input
+                                    // required
+                                    className="input mt-4 mb-8 w-full"
+                                    id="IWish"
+                                    name="IWish"
+                                    type="text"
+                                    value={this.state.IWish}
+                                    onChange={this.commentIWishOnChange}
+                                    placeholder="What do you wish about this project?"
+                                />
+                            </div>
+
+                            <div className="flex">
+                                <div className="pt-6 mr-4">
+                                    <img src={ques} alt="" className="images-20px" />
+                                </div>
+
+                                <input
+                                    // required
+                                    className="input mt-4 mb-8 w-full"
+                                    id="Question"
+                                    name="Question"
+                                    type="text"
+                                    value={this.state.Quest}
+                                    onChange={this.commentQuestionOnChange}
+                                    placeholder="What questions would you like to ask about the project?"
+                                />
+                            </div>
+
+                            <div className="flex">
+                                <div className="pt-6 mr-4">
+                                    <img src={idea} alt="" className="images-20px" />
+                                </div>
+
+                                <input
+                                    // required
+                                    className="input mt-4 mb-8 w-full"
+                                    id="Ideas"
+                                    name="Ideas"
+                                    type="text"
+                                    value={this.state.Idea}
+                                    onChange={this.commentIdeaOnChange}
+                                    placeholder="What ideas would you like to share about the project?"
+                                />
+                            </div>
+
+                            <div className="flex container justify-end mx-auto pt-4 pb-12">
+                                <input
+                                    type="submit"
+                                    value="Submit"
+                                    className="button red p-2 w-48"
+                                />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            )
+        }
     }
 
     render() {
@@ -163,222 +302,47 @@ export default class projectID extends Component {
                 </header>
 
                 {/* topic */}
-                <div className="grid grid-cols-2 px-12 py-8 items-center">
-                    <p className="flex text-30px text-left text-navy">
-                        <Link to="/" className="flex">
-                            <img src={leftarrow} alt="left arrow" className="images-18px mr-2 mt-1.5" />
-                            Project Description
-                        </Link>
+                <div className="grid grid-cols-3 px-12 py-8 items-center text-navy">
+                    <Link to={"/presenterActivityId/" + window.localStorage.ActId} className="">
+                        <img src={leftarrow} alt="left arrow" className="images-18px" />
+                    </Link>
+                    <p className="flex text-30px justify-center">
+                        Project Details
                     </p>
                 </div>
 
-                <div>
-                    <div className="id-container text-navy">
-                        <div className="info-container p-8">
-                            {/* col1 */}
-                            <div className="">
-                                {/* date */}
-                                <div className="mb-4">
-                                    {/* <p className="text-20px bold mr-4">Activity Name : </p> */}
-                                    <p className="text-24px text-left bold">{this.state.projectName}</p>
-                                    <p className="text-18px bold py-4">Member : {this.showMembers()}</p>
-                                </div>
+                <div className="w-9/12 mx-auto bg-pink rounded-lg shadow">
+
+                    <div className="p-8">
+
+                        {/* topic */}
+                        <div className="pb-4">
+                            <p className="text-30px text-red-it">{this.state.projectName}</p>
+                        </div>
+
+                        {/* members */}
+                        <div className="pb-4">
+                            <p className="text-20px text-navy bold pb-4">● Members</p>
+                            <div className="text-navy ml-4">
+                                {this.showMembers()}
                             </div>
                         </div>
 
-                        <div className="line" />
-
-                        <div className="des-container mt-4">
-                            <div className="block">
-                                <p className="text-20px bold">DESCRIPTION : </p>
-                                <p
-                                    className="text-20px italic m4  break-words"
-                                    dangerouslySetInnerHTML={{
-                                        __html: this.state.description,
-                                    }}
-                                ></p>
+                        {/* description */}
+                        <div className="pb-4">
+                            <p className="text-20px text-navy bold pb-1">● Description</p>
+                            <div className="text-16px text-navy mx-auto overflow"
+                                dangerouslySetInnerHTML={{
+                                    __html: this.state.description,
+                                }}>
                             </div>
                         </div>
-                    </div>
-
-                    {/* {this.showButton(window.localStorage.PresenterEmail, this.buttonEdit())}
-                    {this.showButton(window.localStorage.PresenterEmail, this.buttonDelete())} */}
-                    <div className="w-9/12 mx-auto text-navy">
-                        <Feedback />
-
-                        <form onSubmit={this.onSubmitAction}>
-
-                            <div className="text-navy">
-
-                                {/* give feedbacks */}
-                                <div className="px-12 pt-8 items-center justify-left">
-                                    <p className="text-30px text-left">Give Feedbacks</p>
-
-                                    {/* give virtual money */}
-                                    <div className="pt-8 ml-8">
-                                        <p className="text-20px text-left bold mr-2">● Give Virtual Money</p>
-                                        <input
-                                            className="input mt-4 mb-8 w-full"
-                                            // id="projectName"
-                                            // name="projectName"
-                                            type="number"
-                                            // value={this.state.projectName}
-                                            onChange={(e) => this.virtualMoneyOnChange(e.target.value)}
-                                            placeholder="Enter Virtual Money"
-                                            min="0"
-                                        />
-                                    </div>
-
-                                    <div className="ml-8">
-                                        <p className="text-20px text-left bold mr-2">● Give Comments</p>
-                                        <input required
-                                            className="input mt-4 mb-8 w-full"
-                                            id="ILike"
-                                            name="ILike"
-                                            type="text"
-                                            value={this.state.ILike}
-                                            onChange={this.commentILikeOnChange}
-                                            placeholder="What do you like about this project?"
-                                        />
-
-                                        <input required
-                                            className="input mt-4 mb-8 w-full"
-                                            id="IWish"
-                                            name="IWish"
-                                            type="text"
-                                            value={this.state.IWish}
-                                            onChange={this.commentIWishOnChange}
-                                            placeholder="What do you wish about this project?"
-                                        />
-
-                                        <input required
-                                            className="input mt-4 mb-8 w-full"
-                                            id="Question"
-                                            name="Question"
-                                            type="text"
-                                            value={this.state.Quest}
-                                            onChange={this.commentQuestionOnChange}
-                                            placeholder="What questions would you like to ask about the project?"
-                                        />
-
-                                        <input required
-                                            className="input mt-4 mb-8 w-full"
-                                            id="Ideas"
-                                            name="Ideas"
-                                            type="text"
-                                            value={this.state.Idea}
-                                            onChange={this.commentIdeaOnChange}
-                                            placeholder="What ideas would you like to share about the project?"
-                                        />
-
-                                    </div>
-                                </div>
-
-                                <div className="container justify-end mx-auto px-12 pt-4 pb-12">
-                                    <input type="submit" value="Submit" className="button red p-2 w-48" />
-                                </div>
-                            </div>
-
-
-                        </form>
                     </div>
                 </div>
 
-
-
+                <Feedback />
+                {this.showFormFeedback()}
             </main>
-
-            // <div className=" bg-white flex mx-auto w-3/4 m-4  flex-col p-4 rounded-md">
-            //     <div className="text text-xl font-bold flex justify-center my-4 ">
-            //         <label htmlFor="" className="text-red-500 mr-2">
-            //             Project Name :{" "}
-            //         </label>
-            //         {this.state.projectName}
-            //     </div>
-            //     <div>
-            //         <button onClick={(e) => window.history.back()}>Go Back</button>
-            //     </div>
-            //     <div className="my-2 text-red-500  font-semibold">Description</div>
-            //     <div className="rounded-md border-2 border-red-300 p-2 border-collapse flex ">
-            //         <div
-            //             dangerouslySetInnerHTML={{
-            //                 __html: this.state.description,
-            //             }}
-            //             className="my-2 text-grey-500 overflow-x-auto p-2"
-            //         ></div>
-            //         <div>
-            //             Member:
-            //             {this.showMembers()}
-            //         </div>
-            //     </div>
-            //     <div>{this.showCommentAll}</div>
-            //     <div className="">
-            //         <p className="mx-4 mt-4 mb-2 text-base font-semibold text-red-400">
-            //             Comments
-            //         </p>
-            //         <Feedback />
-            //         <form onSubmit={this.onSubmitAction}>
-            //             <div className="my-4  border-red-300 border-2 rounded-md p-2">
-            //                 <label className="text-red-500  font-semibold">
-            //                     Give Virtual Money :
-            //                 </label>
-            //                 <input
-            //                     className="mx-2  text-red-500 border-red-200 border-2 rounded-md px-2"
-            //                     type="number"
-            //                     min="0"
-            //                     onChange={(e) => this.virtualMoneyOnChange(e.target.value)}
-            //                 />
-            //             </div>
-            //             <div className="mb-4 rounded-md border-2 border-red-300 p-2">
-            //                 <div className="mb-2 text-red-500  font-semibold">
-            //                     Give Comment
-            //                 </div>
-            //                 <input
-            //                     type="text"
-            //                     placeholder="I like ..."
-            //                     id="ILike"
-            //                     name="ILike"
-            //                     value={this.state.ILike}
-            //                     required
-            //                     onChange={this.commentILikeOnChange}
-            //                 />
-            //                 <input
-            //                     type="text"
-            //                     placeholder="I wish ..."
-            //                     id="IWish"
-            //                     name="IWish"
-            //                     value={this.state.IWish}
-            //                     required
-            //                     onChange={this.commentIWishOnChange}
-            //                 />
-            //                 <input
-            //                     type="text"
-            //                     placeholder="Question?"
-            //                     id="Question"
-            //                     name="Question"
-            //                     value={this.state.Quest}
-            //                     required
-            //                     onChange={this.commentQuestionOnChange}
-            //                 />
-            //                 <input
-            //                     type="text"
-            //                     placeholder="Idea?"
-            //                     id="Ideas"
-            //                     name="Ideas"
-            //                     required
-            //                     value={this.state.Idea}
-            //                     onChange={this.commentIdeaOnChange}
-            //                 />
-            //             </div>
-            //             <button
-            //                 type="submit"
-            //                 className=" bg-green-400 p-2 rounded-md text-white mb-2"
-            //             >
-            //                 Submit
-            //             </button>
-            //         </form>
-            //     </div>
-            // </div>
         );
     }
 }
@@ -386,8 +350,7 @@ export default class projectID extends Component {
 const TaskComment = (props) => {
     return (
         <div>
-            <div className="grid grid-cols-2 p-8 w-full">
-
+            <div className="grid grid-cols-2 px-8 w-full">
                 {/* col1 */}
                 <div>
                     <div className="mb-4">
@@ -427,7 +390,7 @@ const TaskComment = (props) => {
                 </div>
             </div>
 
-            <div className="line-horizon w-full" />
+            <div className="line-horizon w-full my-8" />
         </div>
     );
 };
@@ -443,7 +406,7 @@ class Feedback extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("https://garlicwak.onrender.com/feedback/project/" + arr[arr.length - 1])
+            .get("http://localhost:5000/feedback/project/" + arr[arr.length - 1])
             .then((resp) => {
                 this.setState({ feedBacks: resp.data });
             })
@@ -463,7 +426,7 @@ class Feedback extends Component {
         const arr = window.location.href.split("/");
         axios
             .post(
-                "https://garlicwak.onrender.com/project/updateTotalVirtualMoney/" +
+                "http://localhost:5000/project/updateTotalVirtualMoney/" +
                 arr[arr.length - 1],
                 { totalVirtualMoney: this.showCalculateVirtual() }
             )
@@ -486,34 +449,31 @@ class Feedback extends Component {
 
     render() {
         return (
-            <div className="text-navy">
-                <div className="px-12 py-8 items-center justify-left">
-                    <p className="text-30px text-left">Feedbacks</p>
+            <div className="items-center justify-center pb-12">
+                {/* topic */}
+                <div className="w-9/12 mx-auto items-center justify-center py-9">
+                    <p className="text-30px text-navy ">Feedbacks</p>
+                </div>
 
-                    <div className="flex py-6 ml-8">
-                        <p className="text-20px text-left bold mr-2">● Total Virtual Money : </p>
+                <div className="flex w-9/12 mx-auto text-navy pb-8">
+                    <p className="text-20px text-left mr-2 bold">
+                        ● Total Virtual Money :{" "}
+                    </p>
 
-                        <div className="text-20px text-red-it mr-2">
-                            {this.showCalculateVirtual()}
-                        </div>
-                        <p className="text-20px text-left">credits</p>
+                    <div className="text-20px text-red-it mr-2">
+                        {this.showCalculateVirtual()}
                     </div>
+                    <p className="text-20px text-left">credits</p>
+                </div>
 
-                    <div className="ml-8">
-                        <div className="text-20px bold">● Comments</div>
+                <div className="w-9/12 mx-auto text-navy">
+                    <div className="text-20px bold">● Comments</div>
 
-                        <div className="">
-                            {this.showCommentAll}
-                            {this.showLengthOfList()}
-                        </div>
+                    <div className="text-16px text-navy mx-auto overflow">
+                        {this.showLengthOfList()}
                     </div>
-
                 </div>
             </div>
-            // <div>
-            //     {/* <label>{this.showCalculateVirtual()}</label> */}
-            //     <div>{this.showLengthOfList()}</div>
-            // </div>
         );
     }
 }

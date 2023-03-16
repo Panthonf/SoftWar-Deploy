@@ -1,222 +1,159 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
 import ProjectLists from "./projects-list.component";
-import Navbar from "../navbar.component";
+import Navbar from "../navbarguest.component";
 import leftarrow from "../images/left-arrow.png";
+import { Link } from "react-router-dom";
 const { Component } = require("react");
 
-// const ActivityList = (props) => (
-//   <div class="m-4 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-//     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-//       {props.activity.actName}
-//     </h5>
-
-//     <p class="mb-3 font-medium text-gray-700 dark:text-gray-400">
-//       <h5 className="font-bold">Description</h5>
-//       {props.activity.actDescription}
-//     </p>
-//     <h5 className="font-bold">Date</h5>
-//     <p class="mb-3 font-medium text-gray-700 dark:text-gray-400">
-//       {props.activity.date.substring(0, 10)}
-//     </p>
-//   </div>
-// );
-
 const ActivityInformation = (props) => {
-  return (
-    <div className="id-container">
-      <div className="info-container">
-        {/* col1 */}
-        <div>
-          {/* date */}
-          <div className="">
-            <p className="text-20px bold">ACTIVITY NAME : </p>
-            <p className="text-20px italic m4">{props.actName}</p>
-          </div>
+    return (
+        <div className="w-9/12 mx-auto bg-pink rounded-lg shadow">
+            <div className="p-8">
+                {/* topic */}
+                <div className="pb-4">
+                    <p className="text-30px text-red-it">{props.actName}</p>
+                </div>
 
-          {/* date */}
-          <div className="">
-            <p className="text-20px bold">DATE : </p>
-            <p className="text-20px italic m4">
-              {props.date.toISOString().substring(0, 10)}
-            </p>
-          </div>
+                {/* date */}
+                <div className="pb-4">
+                    <p className="text-20px text-navy bold pb-4">● Date</p>
+
+                    <div className="flex mx-4 text-navy">
+                        {/* start date */}
+                        <div className="flex items-center mr-6">
+                            <p className="text-16px bold mr-4">Start Date : </p>
+                            <p className="text-base text-navy">
+                                {props.startTime.toISOString().substring(0, 10)}
+                            </p>
+                        </div>
+
+                        {/* end date */}
+                        <div className="flex items-center">
+                            <p className="text-16px bold mr-4">Due Date : </p>
+                            <p className="text-base text-navy">
+                                {props.endTime.toISOString().substring(0, 10)}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* description */}
+                <div className="pb-4">
+                    <p className="text-20px text-navy bold pb-1">● Description</p>
+                    <div
+                        className="text-16px text-navy mx-auto overflow"
+                        dangerouslySetInnerHTML={{ __html: props.descript }}
+                    ></div>
+                </div>
+            </div>
         </div>
-
-        {/* col2 */}
-        {/* <div> */}
-        {/* profile */}
-        {/* <div className="text-20px bold mr-2 mb-2 border-2 text-center rounded-full p-2">
-						Profile
-					</div>
-					<div className="text-white mr-2 px-2 text-center">
-						<p className="text-16px bold">Name : </p>
-						<p className="text-16px italic underline">
-							{props.myname}
-						</p>
-					</div>
-					<div className="text-white mr-2 px-2 text-center">
-						<p className="font-bold text-lg">Virtual Money</p>
-						<p className="text-base font-light text-white border-2 rounded-lg p-2 mt-2">
-							Value : {props.funcGetVirtual}
-							<p>Unit : {props.unitMoney}</p>
-						</p>
-					</div>
-				</div> */}
-      </div>
-
-      <div className="line" />
-
-      <div className="des-container">
-        {/* description */}
-        <div className="block">
-          <p className="text-20px bold">DESCRIPTION : </p>
-          <p
-            className="text-20px italic overflow-hidden break-words"
-            dangerouslySetInnerHTML={{ __html: props.descript }}
-          ></p>
-        </div>
-      </div>
-    </div>
-    // <div className="flex justify-center">
-    // 	<div class="m-4 p-6 flex justify-center bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-    // 		<p class="mb-3 mx-4 font-medium text-gray-700 dark:text-gray-400">
-    // 			<h5 className="font-bold">Activity Name</h5>
-    // 			{props.actName}
-    // 		</p>
-
-    // 		<p class="mb-3 mx-4 font-medium text-gray-700 dark:text-gray-400">
-    // 			<h5 className="font-bold">Date</h5>
-    // 			{props.date.toISOString().substring(0, 10)}
-    // 		</p>
-
-    // 		<p class="mb-3 font-medium text-gray-700 w-52 dark:text-gray-400 break-words">
-    // 			<h5 className="font-bold ">Description</h5>
-    // 			<p className="break-words">{props.descript}</p>
-    // 		</p>
-    // 	</div>
-    // 	{/* <GenerateQR urls={window.location.href} actName={this.state.actName} /> */}
-    // 	<div className="m-4 grid content-center font-semibold ">
-    // 		<div className="text-white mr-2 mb-2 border-2 text-center rounded-full p-2">
-    // 			Profile
-    // 		</div>
-    // 		<div className="text-white mr-2 px-2 text-center">
-    // 			<p className="font-bold text-lg">Your name</p>
-    // 			<p className="text-base font-light italic underline">
-    // 				{props.myname}
-    // 			</p>
-    // 		</div>
-    // 	</div>
-    // 	<div className="m-4 grid content-center font-semibold ">
-    // 		<div className="text-white mr-2 px-2 text-center">
-    // 			<p className="font-bold text-lg">Virtual Money</p>
-    // 			<p className="text-base font-light text-white border-2 rounded-lg p-2 mt-2">
-    // 				Value : {props.funcGetVirtual}
-    // 				<p>Unit : {props.unitMoney}</p>
-    // 			</p>
-    // 		</div>
-    // 	</div>
-    // </div>
-  );
+    );
 };
 
 export default class activityId extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      actName: "",
-      actDescription: "",
-      virtualMoney: "",
-      unitMoney: "",
-      startTime: new Date(),
-      endTime: new Date(),
-    };
-  }
-
-  componentDidMount() {
-    const arr = window.location.href.split("/");
-    // const nameArr = window.location.href.split("/");
-    // const name = nameArr[nameArr.length - 1];
-
-    axios
-      .get("https://garlicwak.onrender.com/activity/" + arr[arr.length - 1])
-      .then((response) => {
-        this.setState({
-          actName: response.data.actName,
-          actDescription: response.data.actDescription,
-          virtualMoney: response.data.virtualMoney,
-          unitMoney: response.data.unitMoney,
-          startTime: new Date(response.data.startTime),
-          endTime: new Date(response.data.endTime),
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-    // const arr = window.location.href.split("/");
-    // const nameArr = window.location.href.split("/");
-    // const name = nameArr[nameArr.length - 1];
-
-    axios
-      .get("https://garlicwak.onrender.com/activity/" + arr[arr.length - 1])
-      .then((response) => {
-        this.setState({
-          actName: response.data.actName,
-          actDescription: response.data.actDescription,
-          virtualMoney: response.data.virtualMoney,
-          unitMoney: response.data.unitMoney,
-          date: new Date(response.data.date),
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  }
-
-  getVirtual() {
-    let virtualMoney = this.state.virtualMoney;
-    var findVirtual = window.localStorage.getItem("guestVirtualMoney");
-    if (findVirtual) {
-      return window.localStorage.guestVirtualMoney;
-    } else {
-      window.localStorage.setItem("guestVirtualMoney", virtualMoney);
-      return virtualMoney;
+    constructor(props) {
+        super(props);
+        this.state = {
+            actName: "",
+            actDescription: "",
+            virtualMoney: "",
+            unitMoney: "",
+            startTime: new Date(),
+            endTime: new Date(),
+        };
     }
-  }
 
-  
+    componentDidMount() {
+        const arr = window.location.href.split("/");
+        // const nameArr = window.location.href.split("/");
+        // const name = nameArr[nameArr.length - 1];
 
-  render() {
-    return (
-      <main>
-        <header>
-          <Navbar name={window.localStorage.getItem("guestName")} />
-        </header>
+        axios
+            .get("http://localhost:5000/activity/" + arr[arr.length - 1])
+            .then((response) => {
+                this.setState({
+                    actName: response.data.actName,
+                    actDescription: response.data.actDescription,
+                    // virtualMoney: response.data.virtualMoney,
+                    unitMoney: response.data.unitMoney,
+                    startTime: new Date(response.data.startTime),
+                    endTime: new Date(response.data.endTime),
+                });
+                window.localStorage.setItem("endAct",response.data.endTime)
+                // console.log(window.localStorage.getItem("guestVirtualMoney").length);
 
-        {/* topic */}
-        <div className="px-12 py-8 items-center">
-          <p className="flex text-30px text-left text-navy">
-            <Link to="/ActivityList" className="flex">
-              <img src={leftarrow} alt="left arrow" className="images-18px mr-2 mt-1.5" />
-              Activity Description
-            </Link>
-          </p>
-        </div>
+                if (window.localStorage.getItem("guestVirtualMoney")) {
+                    this.setState({
+                        virtualMoney: window.localStorage.getItem("guestVirtualMoney"),
+                    });
+                } else {
+                    this.setState({
+                        virtualMoney: response.data.virtualMoney,
+                    });
 
-        {/* info container */}
-        <div className="div">
-          <ActivityInformation
-            actName={this.state.actName}
-            date={this.state.date}
-            descript={this.state.actDescription}
-            myname={window.localStorage.getItem("guestName")}
-            funcGetVirtual={this.getVirtual()}
-            unitMoney={this.state.unitMoney}
-          />
-          <ProjectLists />
-        </div>
-      </main>
-    );
-  }
+                    console.log(response.data.virtualMoney);
+                    window.localStorage.setItem(
+                        "guestVirtualMoney",
+                        response.data.virtualMoney
+                    );
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    // getVirtual() {
+    //   let virtualMoney = this.state.virtualMoney;
+    //   var findVirtual = Boolean(window.localStorage.getItem("guestVirtualMoney"));
+    //   if (findVirtual) {
+    //     return window.localStorage.guestVirtualMoney;
+    //   } else {
+    //     window.localStorage.setItem("guestVirtualMoney", virtualMoney);
+    //     return virtualMoney;
+    //   }
+    // }
+
+    render() {
+        return (
+            <main>
+                <header>
+                    <Navbar name={window.localStorage.getItem("guestName")} />
+                </header>
+
+                <div className="items-center justify-center pb-12">
+
+                    {/* topic */}
+                    <div className="grid grid-cols-3 px-12 py-8 items-center text-navy">
+                        <Link to="/" className="">
+                            <img src={leftarrow} alt="left arrow" className="images-18px" />
+                        </Link>
+                        <p className="flex text-30px justify-center">
+                            Activity Details
+                        </p>
+                    </div>
+
+                    {/* info container */}
+                    <div className="div">
+                        <ActivityInformation
+                            actName={this.state.actName}
+                            startTime={this.state.startTime}
+                            endTime={this.state.endTime}
+                            descript={this.state.actDescription}
+                            myname={window.localStorage.getItem("guestName")}
+                            // funcGetVirtual={this.getVirtual()}
+                            unitMoney={this.state.unitMoney}
+                        />
+
+                    </div>
+
+                    <div className="w-9/12 mx-auto items-center justify-center py-9">
+                        <p className="text-30px text-navy ">Project List</p>
+                    </div>
+
+                    <ProjectLists />
+                </div>
+            </main>
+        );
+    }
 }
