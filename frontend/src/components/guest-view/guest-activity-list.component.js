@@ -100,7 +100,7 @@ export default class guestActivityList extends Component {
 
 	componentDidMount() {
 		axios
-			.get("http://localhost:5000/activity/")
+			.get("https://garlicwak.onrender.com/activity/")
 			.then((response) => {
 				this.setState({ activity: response.data });
 			})
@@ -111,7 +111,7 @@ export default class guestActivityList extends Component {
 
 	deleteActivity(id) {
 		axios
-			.delete("http://localhost:5000/activity/" + id)
+			.delete("https://garlicwak.onrender.com/activity/" + id)
 			.then((res) => console.log(res.data));
 		window.location = "/activityList";
 		this.setState({

@@ -22,7 +22,7 @@ export default class presenterSignup extends Component {
         const { fname, lname, email, password } = this.state;
 
         console.log(fname, lname, email, password);
-        fetch("http://localhost:5000/presenterUsers/presenterReg", {
+        fetch("https://garlicwak.onrender.com/presenterUsers/presenterReg", {
             method: "POST",
             crossDomain: true,
             headers: {

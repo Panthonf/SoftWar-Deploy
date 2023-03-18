@@ -16,7 +16,7 @@ export default class guestLogin extends Component {
     }
 
     componentDidMount() {
-        // axios.get("http://localhost:5000/activity/").then((res) => {
+        // axios.get("https://garlicwak.onrender.com/activity/").then((res) => {
         // console.log(res.data[0].code);
         // });
 
@@ -27,7 +27,7 @@ export default class guestLogin extends Component {
 
         axios
             .get(
-                "http://localhost:5000/activity/name/" +
+                "https://garlicwak.onrender.com/activity/name/" +
                 window.localStorage.getItem("ActCode")
             )
             .then((res) => {
@@ -72,7 +72,7 @@ export default class guestLogin extends Component {
             });
         } else {
             axios
-                .post("http://localhost:5000/guest/add", guestInfo)
+                .post("https://garlicwak.onrender.com/guest/add", guestInfo)
                 .then((res) => {
                     if (res.status === 200) {
                         Swal.fire({

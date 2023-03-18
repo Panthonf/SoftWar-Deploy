@@ -70,7 +70,7 @@ export default class EditProject extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("http://localhost:5000/project/" + arr[arr.length - 1])
+            .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
             .then((res) => {
               // console.log(res.data.projectName);
                 this.setState({
@@ -189,7 +189,7 @@ export default class EditProject extends Component {
         } else {
             axios
                 .post(
-                    "http://localhost:5000/project/update/" + this.state.idProj,
+                    "https://garlicwak.onrender.com/project/update/" + this.state.idProj,
                     dataReq
                 )
                 .then((res) => {
