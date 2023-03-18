@@ -141,7 +141,7 @@ export default class creatorActivityId extends Component {
                     <div className="div">
                         <ActivityInfo
                             urls={
-                                window.localStorage.getItem("access") +
+                                "https://galicwak.pages.dev/access/" +
                                 this.state.code
                             }
                             actName={this.state.actName}
