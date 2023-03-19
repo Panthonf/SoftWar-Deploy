@@ -19,7 +19,7 @@ export default class ResultTable extends Component {
     componentDidMount() {
         axios
             .get(
-                "https://garlicwak.onrender.com/project/activity/" +
+                "https://galicwak-backend.up.railway.app/project/activity/" +
                 window.localStorage.getItem("idAct")
             )
             .then((response) => {

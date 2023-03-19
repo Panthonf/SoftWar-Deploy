@@ -56,7 +56,7 @@ export default class homepage extends Component {
     }
 
     axios
-      .get("https://garlicwak.onrender.com/activity/name/" + code.code)
+      .get("https://galicwak-backend.up.railway.app/activity/name/" + code.code)
       .then((res) => {
         // console.log(res.data.length)
         if (res.status === 200 && res.data.length) {

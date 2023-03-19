@@ -115,7 +115,7 @@ export default class ActivityList extends Component {
 	componentDidMount() {
 		const emails = window.localStorage.getItem("activityEmail");
 		axios
-			.get("https://garlicwak.onrender.com/activity/getbyemail/" + emails)
+			.get("https://galicwak-backend.up.railway.app/activity/getbyemail/" + emails)
 			.then((response) => {
 				this.setState({ activity: response.data });
 			})
@@ -124,7 +124,7 @@ export default class ActivityList extends Component {
 			});
 		// const listName = [];
 		axios
-			.get("https://garlicwak.onrender.com/creatorUsers/creatorUserbyemail/" + emails)
+			.get("https://galicwak-backend.up.railway.app/creatorUsers/creatorUserbyemail/" + emails)
 			.then((res) => {
 				window.localStorage.setItem(
 					"name",
@@ -138,7 +138,7 @@ export default class ActivityList extends Component {
 
 	deleteActivity(id) {
 		axios
-			.delete("https://garlicwak.onrender.com/activity/" + id)
+			.delete("https://galicwak-backend.up.railway.app/activity/" + id)
 			.then((res) => console.log(res.data));
 		window.location = "/activityList";
 		this.setState({

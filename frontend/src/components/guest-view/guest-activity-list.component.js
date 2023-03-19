@@ -100,7 +100,7 @@ export default class guestActivityList extends Component {
 
 	componentDidMount() {
 		axios
-			.get("https://garlicwak.onrender.com/activity/")
+			.get("https://galicwak-backend.up.railway.app/activity/")
 			.then((response) => {
 				this.setState({ activity: response.data });
 			})
@@ -111,7 +111,7 @@ export default class guestActivityList extends Component {
 
 	deleteActivity(id) {
 		axios
-			.delete("https://garlicwak.onrender.com/activity/" + id)
+			.delete("https://galicwak-backend.up.railway.app/activity/" + id)
 			.then((res) => console.log(res.data));
 		window.location = "/activityList";
 		this.setState({

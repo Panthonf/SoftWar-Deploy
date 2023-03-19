@@ -64,7 +64,7 @@ export default class EditActivity extends Component {
         const arr = window.location.href.split("/");
         // console.log(arr);
         axios
-            .get("https://garlicwak.onrender.com/activity/" + arr[arr.length - 1])
+            .get("https://galicwak-backend.up.railway.app/activity/" + arr[arr.length - 1])
             .then((response) => {
                 // const arr1 = response.data.startTime.split(":00.000Z")
                 // const arr2 = response.data.endTime.split(":00.000Z")
@@ -150,7 +150,7 @@ export default class EditActivity extends Component {
             const arr = window.location.href.split("/");
             axios
                 .post(
-                    "https://garlicwak.onrender.com/activity/update/" + arr[arr.length - 1],
+                    "https://galicwak-backend.up.railway.app/activity/update/" + arr[arr.length - 1],
                     activity
                 )
                 .then((res) => {

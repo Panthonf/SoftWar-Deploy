@@ -22,7 +22,7 @@ export default class PresenterProjectId extends Component{
 
     componentDidMount(){
         const arr = window.location.href.split("/");
-        axios.get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1]).then((resp)=>{
+        axios.get("https://galicwak-backend.up.railway.app/project/" + arr[arr.length - 1]).then((resp)=>{
             this.setState({
                 projectName:resp.data.projectName,
                 description:resp.data.description,
@@ -157,7 +157,7 @@ class PresenterFeedBack extends Component{
 
     componentDidMount(){
         const arr = window.location.href.split("/")
-        axios.get("https://garlicwak.onrender.com/feedback/project/" + arr[arr.length - 1]).then((resp)=>{
+        axios.get("https://galicwak-backend.up.railway.app/feedback/project/" + arr[arr.length - 1]).then((resp)=>{
             this.setState({
                 feedbacks:resp.data
             })

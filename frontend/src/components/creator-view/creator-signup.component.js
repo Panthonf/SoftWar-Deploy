@@ -20,7 +20,7 @@ export default class creatorSignup extends Component {
         const { fname, lname, email, password } = this.state;
 
         console.log(fname, lname, email, password);
-        fetch("https://garlicwak.onrender.com/creatorUsers/creatorReg", {
+        fetch("https://galicwak-backend.up.railway.app/creatorUsers/creatorReg", {
             method: "POST",
             crossDomain: true,
             headers: {

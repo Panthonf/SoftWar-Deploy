@@ -31,7 +31,7 @@ export default class presenterLogin extends Component {
         const { email, password } = this.state;
         console.log(email, password);
 
-        fetch("https://garlicwak.onrender.com/presenterUsers/login-presenter", {
+        fetch("https://galicwak-backend.up.railway.app/presenterUsers/login-presenter", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -59,7 +59,7 @@ export default class presenterLogin extends Component {
                             window.localStorage.setItem("PresenterEmail", data.email)
                             var code = window.localStorage.getItem("ActCode");
                             console.log("Code : ", code);
-                            axios.get("https://garlicwak.onrender.com/activity/name/" + code).then((res) => {
+                            axios.get("https://galicwak-backend.up.railway.app/activity/name/" + code).then((res) => {
                                 if (res.status === 200 && res.data.length) {
                                     window.location = "/presenterActivityId/" + res.data[0]._id;
                                 }

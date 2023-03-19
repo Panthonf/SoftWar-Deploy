@@ -70,7 +70,7 @@ export default class EditProject extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
+            .get("https://galicwak-backend.up.railway.app/project/" + arr[arr.length - 1])
             .then((res) => {
               // console.log(res.data.projectName);
                 this.setState({
@@ -189,7 +189,7 @@ export default class EditProject extends Component {
         } else {
             axios
                 .post(
-                    "https://garlicwak.onrender.com/project/update/" + this.state.idProj,
+                    "https://galicwak-backend.up.railway.app/project/update/" + this.state.idProj,
                     dataReq
                 )
                 .then((res) => {

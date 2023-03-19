@@ -16,7 +16,7 @@ export default class guestLogin extends Component {
     }
 
     componentDidMount() {
-        // axios.get("https://garlicwak.onrender.com/activity/").then((res) => {
+        // axios.get("https://galicwak-backend.up.railway.app/activity/").then((res) => {
         // console.log(res.data[0].code);
         // });
 
@@ -27,7 +27,7 @@ export default class guestLogin extends Component {
 
         axios
             .get(
-                "https://garlicwak.onrender.com/activity/name/" +
+                "https://galicwak-backend.up.railway.app/activity/name/" +
                 window.localStorage.getItem("ActCode")
             )
             .then((res) => {
@@ -72,7 +72,7 @@ export default class guestLogin extends Component {
             });
         } else {
             axios
-                .post("https://garlicwak.onrender.com/guest/add", guestInfo)
+                .post("https://galicwak-backend.up.railway.app/guest/add", guestInfo)
                 .then((res) => {
                     if (res.status === 200) {
                         Swal.fire({

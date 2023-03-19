@@ -64,7 +64,7 @@ export default class presenterActivityId extends Component {
     }
 
     componentDidMount() {
-        fetch("https://garlicwak.onrender.com/presenterUsers/presenterUserData", {
+        fetch("https://galicwak-backend.up.railway.app/presenterUsers/presenterUserData", {
             method: "POST",
             crossDomain: true,
             headers: {
@@ -86,7 +86,7 @@ export default class presenterActivityId extends Component {
         // console.log(arr[arr.length - 1]);
 
         axios
-            .get("https://garlicwak.onrender.com/presenterUsers/")
+            .get("https://galicwak-backend.up.railway.app/presenterUsers/")
             .then((res) => {
                 console.log("fff : ", res);
             })
@@ -95,7 +95,7 @@ export default class presenterActivityId extends Component {
             });
 
         axios
-            .get("https://garlicwak.onrender.com/activity/" + arr[arr.length - 1])
+            .get("https://galicwak-backend.up.railway.app/activity/" + arr[arr.length - 1])
             .then((response) => {
                 this.setState({
                     actName: response.data.actName,

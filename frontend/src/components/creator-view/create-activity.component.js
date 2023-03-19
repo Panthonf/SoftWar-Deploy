@@ -147,7 +147,7 @@ export default class CreateActivity extends Component {
             console.log(activity);
 
             axios
-                .post("https://garlicwak.onrender.com/activity/add", activity)
+                .post("https://galicwak-backend.up.railway.app/activity/add", activity)
                 .then((res) => {
                     if (res.status === 200) {
                         Swal.fire("Activity Added !").then((result) => {

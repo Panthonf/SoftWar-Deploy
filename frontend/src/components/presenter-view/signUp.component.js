@@ -22,7 +22,7 @@ export default class presenterSignup extends Component {
         const { fname, lname, email, password } = this.state;
 
         console.log(fname, lname, email, password);
-        fetch("https://garlicwak.onrender.com/presenterUsers/presenterReg", {
+        fetch("https://galicwak-backend.up.railway.app/presenterUsers/presenterReg", {
             method: "POST",
             crossDomain: true,
             headers: {

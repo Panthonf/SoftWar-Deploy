@@ -35,7 +35,7 @@ export default class projectID extends Component {
   componentDidMount() {
     const arr = window.location.href.split("/");
     axios
-      .get("https://garlicwak.onrender.com/project/" + arr[arr.length - 1])
+      .get("https://galicwak-backend.up.railway.app/project/" + arr[arr.length - 1])
       .then((res) => {
         this.setState({
           projectName: res.data.projectName,
@@ -120,7 +120,7 @@ export default class projectID extends Component {
                     timerProgressBar: true,
                 }).then(() => {
                     axios
-                        .post("https://garlicwak.onrender.com/feedback/add", data)
+                        .post("https://galicwak-backend.up.railway.app/feedback/add", data)
                         .then(() => console.log("Success."))
                         .catch((err) => console.log("Error: " + err));
                     window.localStorage.guestVirtualMoney =
@@ -406,7 +406,7 @@ class Feedback extends Component {
     componentDidMount() {
         const arr = window.location.href.split("/");
         axios
-            .get("https://garlicwak.onrender.com/feedback/project/" + arr[arr.length - 1])
+            .get("https://galicwak-backend.up.railway.app/feedback/project/" + arr[arr.length - 1])
             .then((resp) => {
                 this.setState({ feedBacks: resp.data });
             })
@@ -426,7 +426,7 @@ class Feedback extends Component {
         const arr = window.location.href.split("/");
         axios
             .post(
-                "https://garlicwak.onrender.com/project/updateTotalVirtualMoney/" +
+                "https://galicwak-backend.up.railway.app/project/updateTotalVirtualMoney/" +
                 arr[arr.length - 1],
                 { totalVirtualMoney: this.showCalculateVirtual() }
             )
